@@ -3,4 +3,7 @@ from django.shortcuts import HttpResponse
 
 # Create your views here.
 def index(request):
-    return  HttpResponse("Hello Developers")
+    return render(request, 'base.html')
+
+def about(request):
+    return HttpResponse('Welcome to About Page')
