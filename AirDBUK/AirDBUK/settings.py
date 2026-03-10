@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'AirDBUK_App'
+    'AirDBUK_App',
+    "phonenumber_field"
 ]
 
 MIDDLEWARE = [

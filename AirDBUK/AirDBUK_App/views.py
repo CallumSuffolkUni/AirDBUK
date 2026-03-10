@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from django.shortcuts import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template import loaders
+#from .forms import addBooking, addFlight
+from .models import *
 
 # Create your views here.
-def index(request):
-    return render(request, 'base.html')
-
-def about(request):
-    return HttpResponse('Welcome to About Page')
+def home(request):
+    return render(request, 'home.html')
