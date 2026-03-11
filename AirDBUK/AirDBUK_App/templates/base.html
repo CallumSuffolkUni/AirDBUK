@@ -25,11 +25,11 @@
 </head>
 <body>
     <!-- Nav Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid px-4">
             <!-- Logo -->
             <a class="navbar-brand" href="/" style="margin-right: 40px;">
-                <img src="{% static 'images/AirDBUK Logo.webp' %}" alt="AirDBUK Logo" style="max-height: 50px; width: auto;">
+                <img src="{% static 'images/AirDBUK_Logo.png' %}" alt="AirDBUK Logo" style="max-height: 75px; width: auto;">
             </a>
 
             <!-- Hamburger Toggle for Mobile -->
@@ -39,14 +39,21 @@
 
             <!-- Navigation Items -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-1000" href="/">Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Destinations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Info</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active fw-500" href="/">Destinations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-500" href="#">Info</a>
-                    </li>
-                    <li class="nav-item ms-3">
                         <a class="btn btn-primary" href="/login" role="button">Login</a>
                     </li>
                 </ul>
@@ -54,5 +61,15 @@
         </div>
     </nav>
     <!-- End of Nav Bar-->
+
+    <!-- Main Content -->
+
+    <div class="main_body col p-4">
+        <div class="container-fluid">
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
 </body>
 </html>

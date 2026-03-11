@@ -2,31 +2,41 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
-class Flight (models.Model):
+class Airport (models.Model):
     id = models.AutoField(primary_key=True) #Auto assign primary_key
-    Flight_Number = models.CharField(max_length=6, default='')
     City = models.CharField(max_length=100, default='')
     IATA_Code = models.CharField(max_length=3, default='')
-    Departure_Airport = models.CharField(max_length=100, default='')
-    Arrival_Airport = models.CharField(max_length=100, default='')
+    Name = models.CharField(max_length=100, default='')
+
+    class Meta :
+        verbose_name = 'Airport'
+        verbose_name_plural = 'Airports'
+
+    def __str__(self):
+        return f'{self.City}, {self.Name}, ({self.IATA_Code})'
+
+
+class Flight (models.Model):
+    id = models.AutoField(primary_key=True) #Auto assign primary_key
+    Flight_Number = models.CharField(max_length=6, unique=True)
     Departure_Time = models.DateTimeField()
     Arrival_Time = models.DateTimeField()
     Status = models.CharField(max_length=100, default='Scheduled')
+    Travel_Class = models.CharField(max_length=20, default='Economy')
+    Departure_Airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null = True, blank = True, related_name = "departing_flights")
+    Arrival_Airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null = True, blank = True, related_name = "arriving_flights")
 
     class Meta :
         verbose_name = 'Flight'
         verbose_name_plural = 'Flights'
-        constraints = [
-            models.UniqueConstraint(fields=['Flight_Number', 'IATA_Code'], name='UniqueFlight'),
-        ]
 
     def __str__(self):
-        return f'{self.City} ({self.IATA_Code})'
+        return f'{self.Flight_Number} - {self.Departure_Airport} → {self.Arrival_Airport}'
 
 
 class User (models.Model):
     id = models.AutoField(primary_key=True) #Auto assign primary_key
-    Email = models.EmailField(default='')
+    Email = models.EmailField(unique=True, default='')
     Password = models.CharField(max_length=25, default='')
     First_Name = models.CharField(max_length=100, default='')
     Last_Name = models.CharField(max_length=100, default='')

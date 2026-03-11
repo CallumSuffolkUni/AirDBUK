@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'AirDBUK.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bhqxgza1j25vgtvphhdc',
+        'USER': 'utbva8pchvvqbziv',
+        'PASSWORD': 'hwsp5fqTWunm2rNJj5Rw',
+        'HOST': 'bhqxgza1j25vgtvphhdc-mysql.services.clever-cloud.com',
+        'PORT': '3306',
     }
 }
 

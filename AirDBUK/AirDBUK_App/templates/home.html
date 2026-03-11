@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
 
-    {% block title %}Pace Academy{% endblock %}
-    {% block header %}Welcome to Pace Academy Home Page{% endblock %}
+    {% block title %}AirDBUK{% endblock %}
 
     {% block content %}
 
+    <form method="get" action="">
+        {{ form.as_p }}
+        <button type="submit">Search Flights</button>
+    </form>
 
-    
+    {% if flights %}
+        <h2>Available Flights:</h2>
+        <ul>
+            {% for flight in flights %}
+                <li>{{ flight.Flight_Number }}: {{ flight.Departure_Airport }} → {{ flight.Arrival_Airport }} at {{ flight.Departure_Time }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     {% endblock %}
