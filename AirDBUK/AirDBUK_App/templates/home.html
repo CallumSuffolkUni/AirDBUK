@@ -9,6 +9,10 @@
         <button type="submit">Search Flights</button>
     </form>
 
+    <!-- datalists for the JS-powered typeahead -->
+    <datalist id="departure-list"></datalist>
+    <datalist id="arrival-list"></datalist>
+
     {% if flights %}
         <h2>Available Flights:</h2>
         <ul>

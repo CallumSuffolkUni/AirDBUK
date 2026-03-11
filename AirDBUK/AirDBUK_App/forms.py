@@ -14,14 +14,18 @@ class FlightSearchForm(forms.Form):
         label="From",
         widget=forms.TextInput(attrs={
             'placeholder': 'Type departure airport',
-            'class': 'autocomplete'  # We'll use this in JS
+            'class': 'autocomplete',  # We'll use this in JS
+            'list': 'departure-list',
+            'autocomplete': 'off',  # turn off browser native suggestions
         })
     )
     arrival_airport = forms.CharField(
         label="To",
         widget=forms.TextInput(attrs={
             'placeholder': 'Type arrival airport',
-            'class': 'autocomplete'
+            'class': 'autocomplete',
+            'list': 'arrival-list',
+            'autocomplete': 'off',
         })
     )
     departure_date = forms.DateField(
