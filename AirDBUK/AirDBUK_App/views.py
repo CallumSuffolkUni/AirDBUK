@@ -13,13 +13,14 @@ def airport_autocomplete(request):
     if term:
         qs = Airport.objects.filter(
             Q(City__icontains=term) |
-            Q(Name__icontains=term) |
-            Q(IATA_Code__icontains=term)
+            Q(IATA_Code__icontains=term)|
+            Q(Name__icontains=term)
         )[:20]
         for a in qs:
             # stringifies the airport using __str__
             results.append(str(a))
     return JsonResponse(results, safe=False)
+
 def home(request):
     form = FlightSearchForm(request.GET or None)
     flights = []

@@ -13,13 +13,4 @@
     <datalist id="departure-list"></datalist>
     <datalist id="arrival-list"></datalist>
 
-    {% if flights %}
-        <h2>Available Flights:</h2>
-        <ul>
-            {% for flight in flights %}
-                <li>{{ flight.Flight_Number }}: {{ flight.Departure_Airport }} → {{ flight.Arrival_Airport }} at {{ flight.Departure_Time }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
     {% endblock %}

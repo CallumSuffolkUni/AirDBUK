@@ -13,7 +13,7 @@ class Airport (models.Model):
         verbose_name_plural = 'Airports'
 
     def __str__(self):
-        return f'{self.City}, {self.Name}, ({self.IATA_Code})'
+        return f'{self.City}, {self.IATA_Code}, ({self.Name})'
 
 
 class Flight (models.Model):
