@@ -18,7 +18,7 @@ class Airport (models.Model):
 
 class Flight (models.Model):
     id = models.AutoField(primary_key=True) #Auto assign primary_key
-    Flight_Number = models.CharField(max_length=6, unique=True)
+    Flight_Number = models.CharField(max_length=7, unique=True)
     Departure_Time = models.DateTimeField()
     Arrival_Time = models.DateTimeField()
     Status = models.CharField(max_length=100, default='Scheduled')

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CONN_MAX_AGE = 0
+
 
 # Application definition
 
