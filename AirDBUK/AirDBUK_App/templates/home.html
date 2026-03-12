@@ -5,7 +5,7 @@
     {% block content %}
 
     <div class="search-container">
-        <form method="get" action="">
+        <form method="get" action="{% url 'search_results' %}">
             {{ form.as_p }}
             <button type="submit">Search Flights</button>
         </form>
@@ -14,5 +14,7 @@
     <!-- datalists for the JS-powered typeahead -->
     <datalist id="departure-list"></datalist>
     <datalist id="arrival-list"></datalist>
+
+    
 
     {% endblock %}

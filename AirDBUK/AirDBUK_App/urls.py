@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('search/', views.search_results, name='search_results'),
     # AJAX endpoint for typeahead
     path('ajax/airport-autocomplete/', views.airport_autocomplete, name='airport-autocomplete'),
 ]

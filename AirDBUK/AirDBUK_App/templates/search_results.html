@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results - AirDBUK{% endblock %}
+
+{% block content %}
+
+<div class="search-container">
+    <form method="get" action="{% url 'search_results' %}">
+        {{ form.as_p }}
+        <button type="submit">Search Flights</button>
+    </form>
+</div>
+
+<!-- datalists for the JS-powered typeahead -->
+<datalist id="departure-list"></datalist>
+<datalist id="arrival-list"></datalist>
+
+{% if flights %}
+    <section class="results">
+        <h2>Available Flights</h2>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Flight</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Class</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                    <tr>
+                        <td>{{ flight.Flight_Number }}</td>
+                        <td>{{ flight.Departure_Airport }}<br>{{ flight.Departure_Time|date:"Y-m-d H:i" }}</td>
+                        <td>{{ flight.Arrival_Airport }}<br>{{ flight.Arrival_Time|date:"Y-m-d H:i" }}</td>
+                        <td>{{ flight.Travel_Class }}</td>
+                        <td>{{ flight.Status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% elif form.is_bound %}
+    <p>No flights found matching your search.</p>
+{% endif %}
+
+{% endblock %}
