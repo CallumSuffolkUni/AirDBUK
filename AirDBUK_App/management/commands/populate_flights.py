@@ -33,8 +33,6 @@ WHAT THIS GENERATES:
 
 """
 from django.db import connection
-from django.db import transaction
-from django.db import close_old_connections
 import random
 from datetime import date, timedelta, datetime, time
 from django.core.management.base import BaseCommand
@@ -116,131 +114,128 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-
-        # ── Optional clear ───────────────────────────────────────────────
-        if options["clear"]:
-            deleted, _ = Flight.objects.all().delete()
-            self.stdout.write(self.style.WARNING(f"Deleted {deleted} existing flights."))
-            # Close connection after delete
-            close_old_connections()
-            connection.close()
-
-        # ── Load airports ────────────────────────────────────────────────
-        airports = list(Airport.objects.order_by("id"))
-        close_old_connections()
-        connection.close()
+        cursor = connection.cursor()
+        flight_table = Flight._meta.db_table
         
-        if not airports:
-            self.stderr.write("No airports found — populate the Airport table first.")
-            return
+        try:
+            # ── Optional clear ───────────────────────────────────────────────
+            if options["clear"]:
+                cursor.execute(f"DELETE FROM {flight_table}")
+                connection.commit()
+                self.stdout.write(self.style.WARNING("Deleted all existing flights."))
 
-        n_airports = len(airports)
-        n_days     = options["days"]
-
-        # Start TOMORROW so today and past dates are never bookable
-        start_date = date.today() + timedelta(days=1)
-
-        self.stdout.write(
-            f"\nGenerating {n_airports * (n_airports - 1):,} routes/day "
-            f"× 3 classes × {n_days} days "
-            f"starting {start_date} …\n"
-        )
-
-        # Collect flight numbers already in DB to avoid unique-constraint errors
-        used_flight_numbers: set = set(
-            Flight.objects.values_list("Flight_Number", flat=True)
-        )
-        close_old_connections()
-        connection.close()
-
-        total_inserted = 0
-
-        # ── Main loop: one day at a time ─────────────────────────────────
-        for day_offset in range(n_days):
-
-            # Close old connections BEFORE starting new work
-            close_old_connections()
-            connection.close()
+            # ── Load airports ────────────────────────────────────────────────
+            airports = list(Airport.objects.order_by("id"))
             
-            current_day = start_date + timedelta(days=day_offset)
-            flights_today = []
+            if not airports:
+                self.stderr.write("No airports found — populate the Airport table first.")
+                return
 
-            # Per-airport slot counters reset each day
-            # departure_slot_counter[airport_id] → how many departures assigned so far
-            departure_slot_counter: dict[int, int] = {a.id: 0 for a in airports}
+            n_airports = len(airports)
+            n_days     = options["days"]
 
-            # Per-airport arrival sets reset each day (to block duplicate arrival times)
-            arrival_times_used: dict[int, set] = {a.id: set() for a in airports}
+            # Start TOMORROW so today and past dates are never bookable
+            start_date = date.today() + timedelta(days=1)
 
-            # Shuffle so no airport always "wins" the earliest morning slot
-            routes = [
-                (dep, arr)
-                for dep in airports
-                for arr in airports
-                if dep.id != arr.id
-            ]
-            random.shuffle(routes)
-
-            for dep_airport, arr_airport in routes:
-
-                # ── Departure time ────────────────────────────────────────
-                slot_idx       = departure_slot_counter[dep_airport.id]
-                total_dep_mins = (
-                    WINDOW_START_HOUR * 60
-                    + WINDOW_START_MIN
-                    + slot_idx * SLOT_GAP_MINUTES
-                )
-                dep_hour = (total_dep_mins // 60) % 24
-                dep_min  =  total_dep_mins % 60
-                dep_dt   = timezone.make_aware(
-                    datetime.combine(current_day, time(dep_hour, dep_min))
-                )
-                departure_slot_counter[dep_airport.id] += 1
-
-                # ── Arrival time ──────────────────────────────────────────
-                duration = estimate_duration_minutes(dep_airport.id, arr_airport.id)
-                arr_dt   = dep_dt + timedelta(minutes=duration)
-
-                # Nudge forward 1 min at a time until the slot is free
-                while arr_dt in arrival_times_used[arr_airport.id]:
-                    arr_dt += timedelta(minutes=1)
-                arrival_times_used[arr_airport.id].add(arr_dt)
-
-                # ── Generate base flight number; each class gets its own suffixed variant ──
-                base_fn = make_base_number(used_flight_numbers)
-
-                for travel_class, suffix in TRAVEL_CLASSES:
-                    flights_today.append(
-                        Flight(
-                            Flight_Number=base_fn + suffix,   # e.g. AD1042E
-                            Departure_Time=dep_dt,
-                            Arrival_Time=arr_dt,
-                            Status="Scheduled",
-                            Travel_Class=travel_class,
-                            Departure_Airport=dep_airport,
-                            Arrival_Airport=arr_airport,
-                        )
-                    )
-
-            # ── Bulk insert for the day ───────────────────────────────────
-            with transaction.atomic():
-                Flight.objects.bulk_create(flights_today, batch_size=2000)
-
-            # Close connection IMMEDIATELY after bulk insert
-            close_old_connections()
-            connection.close()
-
-            total_inserted += len(flights_today)
             self.stdout.write(
-                f"  {current_day}  →  {len(flights_today):,} records inserted"
+                f"\nGenerating {n_airports * (n_airports - 1):,} routes/day "
+                f"× 3 classes × {n_days} days "
+                f"starting {start_date} …\n"
             )
 
-        # ── Summary ──────────────────────────────────────────────────────
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"\n✅  Done!\n"
-                f"    Records inserted : {total_inserted:,}\n"
-                f"    Total in DB now  : {Flight.objects.count():,}\n"
-                f"    Bookable from    : {start_date} onwards"
+            # Collect flight numbers already in DB to avoid unique-constraint errors
+            cursor.execute(f"SELECT Flight_Number FROM {flight_table}")
+            used_flight_numbers: set = set(row[0] for row in cursor.fetchall())
+
+            total_inserted = 0
+
+            # ── Main loop: one day at a time ─────────────────────────────────
+            for day_offset in range(n_days):
+                
+                current_day = start_date + timedelta(days=day_offset)
+                flights_data = []
+
+                # Per-airport slot counters reset each day
+                departure_slot_counter: dict[int, int] = {a.id: 0 for a in airports}
+
+                # Per-airport arrival sets reset each day (to block duplicate arrival times)
+                arrival_times_used: dict[int, set] = {a.id: set() for a in airports}
+
+                # Shuffle so no airport always "wins" the earliest morning slot
+                routes = [
+                    (dep, arr)
+                    for dep in airports
+                    for arr in airports
+                    if dep.id != arr.id
+                ]
+                random.shuffle(routes)
+
+                for dep_airport, arr_airport in routes:
+
+                    # ── Departure time ────────────────────────────────────────
+                    slot_idx       = departure_slot_counter[dep_airport.id]
+                    total_dep_mins = (
+                        WINDOW_START_HOUR * 60
+                        + WINDOW_START_MIN
+                        + slot_idx * SLOT_GAP_MINUTES
+                    )
+                    dep_hour = (total_dep_mins // 60) % 24
+                    dep_min  =  total_dep_mins % 60
+                    dep_dt   = timezone.make_aware(
+                        datetime.combine(current_day, time(dep_hour, dep_min))
+                    )
+                    departure_slot_counter[dep_airport.id] += 1
+
+                    # ── Arrival time ──────────────────────────────────────────
+                    duration = estimate_duration_minutes(dep_airport.id, arr_airport.id)
+                    arr_dt   = dep_dt + timedelta(minutes=duration)
+
+                    # Nudge forward 1 min at a time until the slot is free
+                    while arr_dt in arrival_times_used[arr_airport.id]:
+                        arr_dt += timedelta(minutes=1)
+                    arrival_times_used[arr_airport.id].add(arr_dt)
+
+                    # ── Generate base flight number; each class gets its own suffixed variant ──
+                    base_fn = make_base_number(used_flight_numbers)
+
+                    for travel_class, suffix in TRAVEL_CLASSES:
+                        flights_data.append((
+                            base_fn + suffix,                    # Flight_Number
+                            dep_dt,                              # Departure_Time
+                            arr_dt,                              # Arrival_Time
+                            "Scheduled",                         # Status
+                            travel_class,                        # Travel_Class
+                            dep_airport.id,                      # Departure_Airport_id
+                            arr_airport.id,                      # Arrival_Airport_id
+                        ))
+
+                # ── Bulk insert using raw SQL ───────────────────────────────────
+                if flights_data:
+                    sql = f"""
+                        INSERT INTO {flight_table}
+                        (Flight_Number, Departure_Time, Arrival_Time, Status, Travel_Class, 
+                         Departure_Airport_id, Arrival_Airport_id)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.executemany(sql, flights_data)
+                    connection.commit()
+
+                total_inserted += len(flights_data)
+                self.stdout.write(
+                    f"  {current_day}  →  {len(flights_data):,} records inserted"
+                )
+
+            # ── Summary ──────────────────────────────────────────────────────
+            cursor.execute(f"SELECT COUNT(*) FROM {flight_table}")
+            total_count = cursor.fetchone()[0]
+            
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"\n✅  Done!\n"
+                    f"    Records inserted : {total_inserted:,}\n"
+                    f"    Total in DB now  : {total_count:,}\n"
+                    f"    Bookable from    : {start_date} onwards"
+                )
             )
-        )
+        finally:
+            cursor.close()
