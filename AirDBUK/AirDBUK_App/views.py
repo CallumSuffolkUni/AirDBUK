@@ -69,7 +69,21 @@ def home(request):
 
 
 def search_results(request):
-    """Display flights matching query parameters from the search form."""
     form = FlightSearchForm(request.GET or None)
+    
+    # DEBUG - remove once fixed
+    if form.is_valid():
+        print("FROM:", repr(form.cleaned_data['departure_airport']))
+        print("TO:", repr(form.cleaned_data['arrival_airport']))
+        print("DATE:", form.cleaned_data['departure_date'])
+        print("CLASS:", form.cleaned_data['travel_class'])
+        
+        from_str = form.cleaned_data['departure_airport']
+        import re
+        m = re.search(r"\((\w{3})\)$", from_str)
+        print("IATA match:", m.group(1) if m else "NO MATCH")
+    
     flights = _perform_search(form)
+    print("FLIGHTS FOUND:", len(flights) if flights else 0)
+    
     return render(request, 'search_results.html', {'form': form, 'flights': flights})
