@@ -14,7 +14,7 @@ class FlightSearchForm(forms.Form):
         label="From",
         widget=forms.TextInput(attrs={
             'placeholder': 'Type departure airport',
-            'class': 'autocomplete',  # We'll use this in JS
+            'class': 'autocomplete form-input',  # We'll use this in JS
             'list': 'departure-list',
             'autocomplete': 'off',  # turn off browser native suggestions
         })
@@ -23,22 +23,27 @@ class FlightSearchForm(forms.Form):
         label="To",
         widget=forms.TextInput(attrs={
             'placeholder': 'Type arrival airport',
-            'class': 'autocomplete',
+            'class': 'autocomplete form-input',
             'list': 'arrival-list',
             'autocomplete': 'off',
         })
     )
     departure_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-input',
+        }),
         label="Departure",
         initial=date.today
     )
     travel_class = forms.ChoiceField(  # Fix 2: ChoiceField not ModelChoiceField
         choices=TRAVEL_CLASS_CHOICES,
         label="Travel Class",
+        widget=forms.Select(attrs={'class': 'form-input'})
     )
     passengers = forms.IntegerField(
         min_value=1,
         initial=1,
-        label="Passengers"
+        label="Passengers",
+        widget=forms.NumberInput(attrs={'class': 'form-input'})
     )

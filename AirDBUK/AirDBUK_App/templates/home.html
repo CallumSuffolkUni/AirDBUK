@@ -4,10 +4,12 @@
 
     {% block content %}
 
-    <form method="get" action="">
-        {{ form.as_p }}
-        <button type="submit">Search Flights</button>
-    </form>
+    <div class="search-container">
+        <form method="get" action="">
+            {{ form.as_p }}
+            <button type="submit">Search Flights</button>
+        </form>
+    </div>
 
     <!-- datalists for the JS-powered typeahead -->
     <datalist id="departure-list"></datalist>

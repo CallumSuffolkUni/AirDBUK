@@ -7,3 +7,47 @@
     border-radius: 30px;
 
 }
+
+/* search form styling */
+.search-container {
+    background: #f0f4f8;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.search-container input,
+.search-container select {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 1rem;
+}
+
+.search-container button {
+    background: #265284;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.search-container button:hover {
+    background: #1d446d;
+}
+
+/* force paragraphs inside form to have minimal spacing */
+.search-container p {
+    margin: 0;
+}
