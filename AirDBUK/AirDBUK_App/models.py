@@ -23,6 +23,7 @@ class Flight (models.Model):
     Arrival_Time = models.DateTimeField()
     Status = models.CharField(max_length=100, default='Scheduled')
     Travel_Class = models.CharField(max_length=20, default='Economy')
+    Price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     Departure_Airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null = True, blank = True, related_name = "departing_flights")
     Arrival_Airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null = True, blank = True, related_name = "arriving_flights")
 

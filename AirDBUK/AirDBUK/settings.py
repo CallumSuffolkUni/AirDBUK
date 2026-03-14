@@ -75,6 +75,10 @@ WSGI_APPLICATION = 'AirDBUK.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# settings.py
+import certifi  # pip install certifi
+
+
 
 DATABASES = {
     'default': {
@@ -84,6 +88,13 @@ DATABASES = {
         'PASSWORD': 'hwsp5fqTWunm2rNJj5Rw',
         'HOST': 'bhqxgza1j25vgtvphhdc-mysql.services.clever-cloud.com',
         'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'ssl': {
+                'ca': certifi.where(),  # validate server cert with public CA bundle
+            },
+        },
+        'CONN_MAX_AGE': 0,  # keep 0 while diagnosing
     }
 }
 

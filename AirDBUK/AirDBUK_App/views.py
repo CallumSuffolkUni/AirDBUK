@@ -6,7 +6,13 @@ from .models import *
 
 # Create your views here.
 
-def airport_autocomplete(request):
+def home(request):
+    """Render landing page with an empty search form."""
+    form = FlightSearchForm()
+    return render(request, 'home.html', {'form': form})
+
+
+def airport_autocomplete(request): # Simply for when searching what airport to depart and arrive at.
     """Return a JSON list of airport descriptions matching the query term."""
     term = request.GET.get('term', '').strip()
     results = []
@@ -37,16 +43,14 @@ def _perform_search(form):
     travel_class = form.cleaned_data['travel_class']
 
     def lookup_airport(value):
-        """Try to resolve a displayed airport string back to an Airport instance."""
         if not value:
             return None
-        # try to extract IATA code from parentheses at end
         import re
-        m = re.search(r"\((\w{3})\)$", value)
+        # Format is "City, IATA, (Name)" — grab the 3-letter code after the first comma
+        m = re.search(r",\s*([A-Z]{3})\s*,", value)
         if m:
-            code = m.group(1)
-            return Airport.objects.filter(IATA_Code__iexact=code).first()
-        # fallback: try matching city or name
+            return Airport.objects.filter(IATA_Code__iexact=m.group(1)).first()
+        # fallback
         return Airport.objects.filter(
             Q(City__iexact=value) | Q(Name__iexact=value) | Q(IATA_Code__iexact=value)
         ).first()
@@ -58,32 +62,45 @@ def _perform_search(form):
         Departure_Airport=from_airport,
         Arrival_Airport=to_airport,
         Departure_Time__date=departure_date,
-        Travel_Class=travel_class
     )
-
-
-def home(request):
-    """Render landing page with an empty search form."""
-    form = FlightSearchForm()
-    return render(request, 'home.html', {'form': form})
-
 
 def search_results(request):
     form = FlightSearchForm(request.GET or None)
-    
-    # DEBUG - remove once fixed
-    if form.is_valid():
-        print("FROM:", repr(form.cleaned_data['departure_airport']))
-        print("TO:", repr(form.cleaned_data['arrival_airport']))
-        print("DATE:", form.cleaned_data['departure_date'])
-        print("CLASS:", form.cleaned_data['travel_class'])
-        
-        from_str = form.cleaned_data['departure_airport']
-        import re
-        m = re.search(r"\((\w{3})\)$", from_str)
-        print("IATA match:", m.group(1) if m else "NO MATCH")
-    
+
     flights = _perform_search(form)
     print("FLIGHTS FOUND:", len(flights) if flights else 0)
-    
+
+    # Add duration to each flight
+    for flight in flights:
+        diff = flight.Arrival_Time - flight.Departure_Time
+        total_minutes = int(diff.total_seconds() // 60)
+        flight.duration = f"{total_minutes // 60}h {total_minutes % 60}m"
+
     return render(request, 'search_results.html', {'form': form, 'flights': flights})
+
+def confirm_flight(request):
+    flight_id = request.GET.get('flight_id')
+    passengers = int(request.GET.get('passengers', 1))
+
+    flight = get_object_or_404(Flight, id=flight_id)
+
+    # Calculate duration
+    diff = flight.Arrival_Time - flight.Departure_Time
+    total_minutes = int(diff.total_seconds() // 60)
+    flight.duration = f"{total_minutes // 60}h {total_minutes % 60}m"
+
+    # Re-bind the search form with original query values so the back link works
+    search_form = FlightSearchForm(initial={
+        'departure_airport': request.GET.get('departure_airport'),
+        'arrival_airport': request.GET.get('arrival_airport'),
+        'departure_date': request.GET.get('departure_date'),
+        'travel_class': request.GET.get('travel_class'),
+        'passengers': request.GET.get('passengers'),
+    })
+
+    return render(request, 'confirm_flight.html', {
+        'flight': flight,
+        'passengers': passengers,
+        'total_price': flight.Price * passengers,
+        'form': search_form,
+    })

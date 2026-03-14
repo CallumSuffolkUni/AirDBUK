@@ -1,41 +1,68 @@
 {% extends 'base.html' %}
-
 {% block title %}Search Results - AirDBUK{% endblock %}
 
 {% block content %}
 
-<!-- datalists for the JS-powered typeahead -->
-<datalist id="departure-list"></datalist>
-<datalist id="arrival-list"></datalist>
-
 {% if flights %}
-    <section class="results">
-        <h2>Available Flights</h2>
-        <table class="results-table">
-            <thead>
-                <tr>
-                    <th>Flight</th>
-                    <th>Departure</th>
-                    <th>Arrival</th>
-                    <th>Class</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for flight in flights %}
-                    <tr>
-                        <td>{{ flight.Flight_Number }}</td>
-                        <td>{{ flight.Departure_Airport }}<br>{{ flight.Departure_Time|date:"Y-m-d H:i" }}</td>
-                        <td>{{ flight.Arrival_Airport }}<br>{{ flight.Arrival_Time|date:"Y-m-d H:i" }}</td>
-                        <td>{{ flight.Travel_Class }}</td>
-                        <td>{{ flight.Status }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+
+{% for flight in flights %}
+<div class="container-fluid w-75">
+    <div class="flight-card contai">
+        <div class="flight-card-header">
+        <span class="fw-500 text-dark" style="font-size:13px; letter-spacing:0.04em;">{{ flight.Flight_Number }}</span>
+        <span class="text-muted" style="font-size:13px;">{{ flight.Departure_Time|date:"D d M Y" }}</span>
+        </div>
+
+        <div class="flight-card-body">
+            <div class="route">
+                <div>
+                    <div class="airport-city">{{ flight.Departure_Airport.City }}</div>
+                    <div class="airport-iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                    <div class="airport-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                </div>
+                <div class="arrow-track mt-3">
+                    <div class="track-line">
+                        <div class="track-dot"></div>
+                        <div class="track-line-seg"></div>
+                            <span><i class="ri-flight-takeoff-line"></i></span>
+                        <div class="track-line-seg"></div>
+                        <div class="track-dot"></div>
+                    </div>
+                    <span class="track-duration">{{ flight.duration }}</span>
+                </div>
+                <div style="text-align:right;">
+                    <div class="airport-city">{{ flight.Arrival_Airport.City }}</div>
+                    <div class="airport-iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
+                    <div class="airport-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
+                </div>
+            </div>
+
+            <div class="card-divider"></div>
+
+            <div class="right-panel">
+                <div class="card text-center">
+                    <div class="card-header">
+                        {{ flight.Travel_Class }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">From</p>
+                        <h5 class="card-title">£{{ flight.Price }}</h5>
+                        <a class="btn btn-primary" type="button" href="{% url 'confirm_flight' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}">
+                            Select
+                        </a>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        {{ flight.Status }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
 {% elif form.is_bound %}
-    <p>No flights found matching your search.</p>
+  <p class="text-muted">No flights found matching your search.</p>
 {% endif %}
 
 {% endblock %}

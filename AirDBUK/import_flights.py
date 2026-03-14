@@ -33,9 +33,9 @@ BATCH_SIZE = 5_000
 INSERT_SQL = f"""
     INSERT IGNORE INTO `{TABLE}`
         (Flight_Number, Departure_Airport_id, Arrival_Airport_id,
-         Departure_Time, Arrival_Time, Status, Travel_Class)
+         Departure_Time, Arrival_Time, Status, Travel_Class, Price)
     VALUES
-        (%s, %s, %s, %s, %s, %s, %s)
+        (%s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 def main():
@@ -81,6 +81,7 @@ def main():
                     row["Arrival_Time"],
                     row["Status"],
                     row["Travel_Class"],
+                    float(row["Price"]),
                 ))
 
                 if len(batch) >= BATCH_SIZE:
