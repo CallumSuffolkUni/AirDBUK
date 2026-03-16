@@ -78,6 +78,7 @@ def search_results(request):
 
     return render(request, 'search_results.html', {'form': form, 'flights': flights})
 
+
 def confirm_flight(request):
     flight_id = request.GET.get('flight_id')
     passengers = int(request.GET.get('passengers', 1))
@@ -99,6 +100,28 @@ def confirm_flight(request):
     })
 
     return render(request, 'confirm_flight.html', {
+        'flight': flight,
+        'passengers': passengers,
+        'total_price': flight.Price * passengers,
+        'form': search_form,
+    })
+
+def passenger_input (request):
+    flight_id = request.GET.get('flight_id')
+    passengers = int(request.GET.get('passengers', 1))
+
+    flight = get_object_or_404(Flight, id=flight_id)
+
+    # Re-bind the search form with original query values so the back link works
+    search_form = FlightSearchForm(initial={
+        'departure_airport': request.GET.get('departure_airport'),
+        'arrival_airport': request.GET.get('arrival_airport'),
+        'departure_date': request.GET.get('departure_date'),
+        'travel_class': request.GET.get('travel_class'),
+        'passengers': request.GET.get('passengers'),
+    })
+
+    return render(request, 'passenger_input.html', {
         'flight': flight,
         'passengers': passengers,
         'total_price': flight.Price * passengers,

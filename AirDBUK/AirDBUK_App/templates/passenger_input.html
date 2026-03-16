@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Passenger Input - AirDBUK{% endblock %}
+
+{% block content %}
+
+<div class="passenger-input-page">
+    <form method="get" action="{% url 'confirm_flight' %}">
+        {% for field in form %}
+            <input type="hidden" name="{{ field.html_name }}" value="{{ field.value }}">
+        {% endfor %}
+        <button class="btn btn-secondary" type="submit" class="back-link">&#8592; Back to flight</button>
+    </form>
+</div>
+
+{% endblock %}
