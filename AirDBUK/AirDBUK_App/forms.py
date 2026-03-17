@@ -47,3 +47,28 @@ class FlightSearchForm(forms.Form):
         label="Passengers",
         widget=forms.NumberInput(attrs={'class': 'form-input'})
     )
+
+class AddPassengerDetails(forms.Form):
+    first_name = forms.CharField(
+        label="First Name",
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter first name"
+        })
+    )
+    last_name = forms.CharField(
+        label="Last Name",
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter last name"
+        })
+    )
+    dob = forms.DateField(
+        label="Date of Birth",
+        input_formats=['%Y-%m-%d'],
+        widget=forms.DateInput(attrs={
+            "type": "date",
+        })  
+    )
+
+    

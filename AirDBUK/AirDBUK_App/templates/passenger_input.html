@@ -4,12 +4,104 @@
 {% block content %}
 
 <div class="passenger-input-page">
-    <form method="get" action="{% url 'confirm_flight' %}">
-        {% for field in form %}
-            <input type="hidden" name="{{ field.html_name }}" value="{{ field.value }}">
-        {% endfor %}
-        <button class="btn btn-secondary" type="submit" class="back-link">&#8592; Back to flight</button>
-    </form>
+    <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to confirm flight</a>
+
+    <h6 class="display-6 page-title mt-3">Passenger Details</h6>
+
+    <div class="confirm-grid">
+
+        <!-- Left: Passenger Details -->
+        <div class="confirm-left">
+
+            {{ formset.management_form }}
+            <form method="post">
+            {% for form in formset %}
+
+                <div class="card confirm-card mb-3">
+                    <div class="section-meta">
+                        <span class="card-label">Passenger {{ forloop.counter }}</span>
+                    </div>
+
+                        {% csrf_token %}
+                        
+                        <div class="first-name">
+                            <label class="first-name ms-1">First Name</label>
+                            {{ form.first_name }}
+                        </div>
+
+                        <div class="last-name">
+                            <label class="last-name ms-1">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+
+                        <div class="dob">
+                            <label class="dob ms-1">Select Date of Birth</label>
+                            {{ form.dob }}
+                        </div>
+                </div>
+            {% endfor %}
+
+                <div class="passenger-button">
+                    <a class="btn btn-primary" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}&back={{ request.get_full_path|urlencode }}">
+                        Confirm Passengers
+                    </a>
+                </div>
+            </form>
+            
+
+            
+
+        </div>
+
+        <!-- Right: summary -->
+        <div class="confirm-right">
+            <div class="card confirm-card">
+                <div class="section-meta">
+                    <span class="card-label">Outbound flight</span>
+                    <span class="badge badge-success">{{ flight.Status }}</span>
+                </div>
+
+                <div class="route-row">
+                    <div class="airport-block">
+                        <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                        <div class="city">{{ flight.Departure_Airport.City }}</div>
+                        <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                    </div>
+                    <div class="track">
+                        <div class="track-line">
+                            <div class="track-dot"></div>
+                            <div class="track-seg"></div>
+                            <span><i class="ri-flight-takeoff-line"></i></span>
+                            <div class="track-seg"></div>
+                            <div class="track-dot"></div>
+                        </div>
+                        <span class="duration">{{ flight.duration }}</span>
+                    </div>
+                    <div class="airport-block text-end">
+                        <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
+                        <div class="city">{{ flight.Arrival_Airport.City }}</div>
+                        <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
+                    </div>
+                </div>
+
+                    <p class="flight-meta">
+                    Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
+                    </p>
+
+                <hr>
+
+                <div class="detail-row">
+                    <span>Class</span>
+                    <span class="">{{ flight.Travel_Class }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Passengers</span>
+                    <span>{{ passengers }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 {% endblock %}

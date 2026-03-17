@@ -72,7 +72,7 @@ class Passenger (models.Model):
     id = models.AutoField(primary_key=True) #Auto assign primary_key
     First_Name = models.CharField(max_length=100, default='')
     Last_Name = models.CharField(max_length=100, default='')
-    DOB = models.DateTimeField()
+    DOB = models.DateField()
     User_ID = models.ForeignKey(User, on_delete=models.SET_NULL, null = True, blank = True, related_name = "passengers") #Foreign Key linking to user table
 
     class Meta:

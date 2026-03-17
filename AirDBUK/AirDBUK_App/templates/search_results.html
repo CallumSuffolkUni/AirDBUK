@@ -47,7 +47,7 @@
                     <div class="card-body">
                         <p class="card-text">From</p>
                         <h5 class="card-title">£{{ flight.Price }}</h5>
-                        <a class="btn btn-primary" type="button" href="{% url 'confirm_flight' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}">
+                        <a class="btn btn-primary" type="button" href="{% url 'confirm_flight' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}&back={{ request.get_full_path|urlencode }}">
                             Select
                         </a>
                     </div>
