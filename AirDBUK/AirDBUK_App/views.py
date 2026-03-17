@@ -1,3 +1,6 @@
+import calendar
+import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
@@ -6,6 +9,22 @@ from .models import *
 from django.forms import formset_factory
 
 # Create your views here.
+
+
+def lookup_airport(value):
+    """Convert an airport search string into an Airport instance."""
+    if not value:
+        return None
+    import re
+    # Format is "City, IATA, (Name)" — grab the 3-letter code after the first comma
+    m = re.search(r",\s*([A-Z]{3})\s*,", value)
+    if m:
+        return Airport.objects.filter(IATA_Code__iexact=m.group(1)).first()
+    # fallback
+    return Airport.objects.filter(
+        Q(City__iexact=value) | Q(Name__iexact=value) | Q(IATA_Code__iexact=value)
+    ).first()
+
 
 def home(request):
     """Render landing page with an empty search form."""
@@ -41,20 +60,6 @@ def _perform_search(form):
     from_airport_str = form.cleaned_data['departure_airport']
     to_airport_str = form.cleaned_data['arrival_airport']
     departure_date = form.cleaned_data['departure_date']
-    travel_class = form.cleaned_data['travel_class']
-
-    def lookup_airport(value):
-        if not value:
-            return None
-        import re
-        # Format is "City, IATA, (Name)" — grab the 3-letter code after the first comma
-        m = re.search(r",\s*([A-Z]{3})\s*,", value)
-        if m:
-            return Airport.objects.filter(IATA_Code__iexact=m.group(1)).first()
-        # fallback
-        return Airport.objects.filter(
-            Q(City__iexact=value) | Q(Name__iexact=value) | Q(IATA_Code__iexact=value)
-        ).first()
 
     from_airport = lookup_airport(from_airport_str)
     to_airport = lookup_airport(to_airport_str)
@@ -71,13 +76,66 @@ def search_results(request):
     flights = _perform_search(form)
     print("FLIGHTS FOUND:", len(flights) if flights else 0)
 
+    # Determine which month to show in the calendar
+    today = datetime.date.today()
+    selected_date = today
+    if form.is_valid():
+        selected_date = form.cleaned_data.get('departure_date') or today
+
+    calendar_year = selected_date.year
+    calendar_month = selected_date.month
+
+    # Find all available dates for the selected route / class
+    available_dates = set()
+    if form.is_valid():
+        from_airport = lookup_airport(form.cleaned_data.get('departure_airport'))
+        to_airport = lookup_airport(form.cleaned_data.get('arrival_airport'))
+        travel_class = form.cleaned_data.get('travel_class')
+
+        qs = Flight.objects.filter(
+            Departure_Airport=from_airport,
+            Arrival_Airport=to_airport,
+        )
+        if travel_class:
+            qs = qs.filter(Travel_Class=travel_class)
+
+        available_dates = set(qs.values_list('Departure_Time__date', flat=True))
+
+    # Build a month grid for the calendar
+    cal = calendar.Calendar(firstweekday=0)
+    calendar_weeks = cal.monthdayscalendar(calendar_year, calendar_month)
+
+    available_days = {
+        d.day for d in available_dates
+        if d.year == calendar_year and d.month == calendar_month
+    }
+    selected_day = selected_date.day if (selected_date.year == calendar_year and selected_date.month == calendar_month) else None
+
+    # Keep the current query parameters for calendar links
+    base_query = {
+        'departure_airport': request.GET.get('departure_airport', ''),
+        'arrival_airport': request.GET.get('arrival_airport', ''),
+        'travel_class': request.GET.get('travel_class', ''),
+        'passengers': request.GET.get('passengers', ''),
+    }
+
     # Add duration to each flight
     for flight in flights:
         diff = flight.Arrival_Time - flight.Departure_Time
         total_minutes = int(diff.total_seconds() // 60)
         flight.duration = f"{total_minutes // 60}h {total_minutes % 60}m"
 
-    return render(request, 'search_results.html', {'form': form, 'flights': flights})
+    return render(request, 'search_results.html', {
+        'form': form,
+        'flights': flights,
+        'calendar_year': calendar_year,
+        'calendar_month': calendar_month,
+        'calendar_month_name': calendar.month_name[calendar_month],
+        'calendar_weeks': calendar_weeks,
+        'available_days': available_days,
+        'selected_day': selected_day,
+        'base_query': base_query,
+    })
 
 
 def confirm_flight(request):

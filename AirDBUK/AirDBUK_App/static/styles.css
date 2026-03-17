@@ -373,3 +373,70 @@
     margin: 2rem auto;
     padding: 0 1rem;
 }
+
+/* ── Calendar (Search Results) ────────────────────────────────────── */
+.calendar-card {
+    background: var(--bs-body-bg, #fff);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar-table th,
+.calendar-table td {
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 0.9rem;
+}
+
+.calendar-day {
+    border-radius: 6px;
+    height: 36px;
+    vertical-align: middle;
+}
+
+.calendar-day.available {
+    background: rgba(38, 82, 132, 0.1);
+}
+
+.calendar-day.selected {
+    border: 2px solid #265284;
+}
+
+.calendar-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.calendar-link:hover {
+    background: rgba(38, 82, 132, 0.15);
+    border-radius: 6px;
+}
+
+.calendar-empty {
+    background: #f8f9fa;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.available-dot {
+    background: #265284;
+}
+
+.selected-dot {
+    background: #1d446d;
+}

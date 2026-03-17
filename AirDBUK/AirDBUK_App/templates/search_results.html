@@ -4,9 +4,67 @@
 {% block content %}
 
 {% if flights %}
-
-{% for flight in flights %}
 <div class="container-fluid w-75">
+  <div class="row">
+    <div class="col-lg-4 mb-4">
+      <div class="calendar-card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="mb-0">{{ calendar_month_name }} {{ calendar_year }}</h5>
+            <p class="mb-0 text-muted" style="font-size:0.9rem;">Available dates for your search</p>
+          </div>
+          {% if form.is_bound %}
+          <a class="btn btn-sm btn-outline-secondary" href="{% url 'search_results' %}?departure_airport={{ base_query.departure_airport|urlencode }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{ base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}">Refresh</a>
+          {% endif %}
+        </div>
+
+        {% if form.is_bound %}
+        <table class="calendar-table table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Mon</th>
+              <th scope="col">Tue</th>
+              <th scope="col">Wed</th>
+              <th scope="col">Thu</th>
+              <th scope="col">Fri</th>
+              <th scope="col">Sat</th>
+              <th scope="col">Sun</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for week in calendar_weeks %}
+            <tr>
+              {% for day in week %}
+                {% if day == 0 %}
+                  <td class="calendar-day calendar-empty"></td>
+                {% else %}
+                  {% if day in available_days %}
+                    <td class="calendar-day available {% if day == selected_day %}selected{% endif %}">
+                      <a class="calendar-link" href="{% url 'search_results' %}?departure_date={{ calendar_year }}-{{ calendar_month|stringformat:"02d" }}-{{ day|stringformat:"02d" }}&departure_airport={{ base_query.departure_airport|urlencode }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{ base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}">
+                        {{ day }}
+                      </a>
+                    </td>
+                  {% else %}
+                    <td class="calendar-day {% if day == selected_day %}selected{% endif %}">{{ day }}</td>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="calendar-legend mt-2">
+          <span class="dot available-dot"></span> Available
+          <span class="dot selected-dot ms-3"></span> Selected
+        </div>
+        {% else %}
+          <p class="text-muted">Enter a route and date on the home page to see availability.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      {% for flight in flights %}
     <div class="flight-card">
         <div class="flight-card-header">
         <span class="fw-500 text-dark" style="font-size:13px; letter-spacing:0.04em;">{{ flight.Flight_Number }}</span>
@@ -58,8 +116,10 @@
             </div>
         </div>
     </div>
+  {% endfor %}
+    </div>
+  </div>
 </div>
-{% endfor %}
 
 {% elif form.is_bound %}
   <p class="text-muted">No flights found matching your search.</p>
