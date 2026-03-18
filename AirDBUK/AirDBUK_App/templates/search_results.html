@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% if flights %}
+{% if form.is_bound %}
 <div class="container-fluid w-75">
   <div class="row">
     <div class="col-lg-4 mb-4">
@@ -13,12 +13,9 @@
             <h5 class="mb-0">{{ calendar_month_name }} {{ calendar_year }}</h5>
             <p class="mb-0 text-muted" style="font-size:0.9rem;">Available dates for your search</p>
           </div>
-          {% if form.is_bound %}
           <a class="btn btn-sm btn-outline-secondary" href="{% url 'search_results' %}?departure_airport={{ base_query.departure_airport|urlencode }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{ base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}">Refresh</a>
-          {% endif %}
         </div>
 
-        {% if form.is_bound %}
         <table class="calendar-table table table-sm">
           <thead>
             <tr>
@@ -57,13 +54,11 @@
           <span class="dot available-dot"></span> Available
           <span class="dot selected-dot ms-3"></span> Selected
         </div>
-        {% else %}
-          <p class="text-muted">Enter a route and date on the home page to see availability.</p>
-        {% endif %}
       </div>
     </div>
 
     <div class="col-lg-8">
+      {% if flights %}
       {% for flight in flights %}
     <div class="flight-card">
         <div class="flight-card-header">
@@ -117,12 +112,13 @@
         </div>
     </div>
   {% endfor %}
+      {% else %}
+      <p class="text-muted">No flights found matching your search.</p>
+      {% endif %}
     </div>
   </div>
 </div>
 
-{% elif form.is_bound %}
-  <p class="text-muted">No flights found matching your search.</p>
 {% endif %}
 
 {% endblock %}
