@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 class Airport (models.Model):
     id = models.AutoField(primary_key=True) #Auto assign primary_key
-    City = models.CharField(max_length=100, default='')
+    City = models.CharField(max_length=255  , default='')
     IATA_Code = models.CharField(max_length=3, default='')
     Name = models.CharField(max_length=100, default='')
 
