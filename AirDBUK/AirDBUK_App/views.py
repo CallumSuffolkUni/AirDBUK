@@ -87,12 +87,13 @@ def search_results(request):
     calendar_month = int(request.GET.get('calendar_month', selected_date.month))
 
     # Find all available dates for the selected route / class
+    # Done independently of form validity — only needs airport/class params
     available_dates = set()
-    if form.is_valid():
-        from_airport = lookup_airport(form.cleaned_data.get('departure_airport'))
-        to_airport = lookup_airport(form.cleaned_data.get('arrival_airport'))
-        travel_class = form.cleaned_data.get('travel_class')
+    from_airport = lookup_airport(request.GET.get('departure_airport'))
+    to_airport = lookup_airport(request.GET.get('arrival_airport'))
+    travel_class = request.GET.get('travel_class')
 
+    if from_airport and to_airport:
         qs = Flight.objects.filter(
             Departure_Airport=from_airport,
             Arrival_Airport=to_airport,
@@ -133,6 +134,7 @@ def search_results(request):
         'arrival_airport': request.GET.get('arrival_airport', ''),
         'travel_class': request.GET.get('travel_class', ''),
         'passengers': request.GET.get('passengers', ''),
+        'departure_date': request.GET.get('departure_date', ''),
     }
 
     # Add duration to each flight

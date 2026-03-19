@@ -79,7 +79,6 @@ WSGI_APPLICATION = 'AirDBUK.wsgi.application'
 import certifi  # pip install certifi
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
