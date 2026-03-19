@@ -15,31 +15,16 @@
 
             {{ formset.management_form }}
             <form method="post">
-            {% for form in formset %}
+                {% csrf_token %}
+                {% for form in formset %}
 
                 <div class="card confirm-card mb-3">
                     <div class="section-meta">
                         <span class="card-label">Passenger {{ forloop.counter }}</span>
                     </div>
-
-                        {% csrf_token %}
-                        
-                        <div class="first-name">
-                            <label class="first-name ms-1">First Name</label>
-                            {{ form.first_name }}
-                        </div>
-
-                        <div class="last-name">
-                            <label class="last-name ms-1">Last Name</label>
-                            {{ form.last_name }}
-                        </div>
-
-                        <div class="dob">
-                            <label class="dob ms-1">Select Date of Birth</label>
-                            {{ form.dob }}
-                        </div>
+                    {{ form.as_p }}
                 </div>
-            {% endfor %}
+                {% endfor %}
 
                 <div class="passenger-button">
                     <a class="btn btn-primary" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}&back={{ request.get_full_path|urlencode }}">
