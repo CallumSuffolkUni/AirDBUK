@@ -1,21 +1,9 @@
-
-
-.carousel-book {
-    background-color: rgb(38, 82, 132);
-}
-
-.book-table {
-    background-color: white;
-    border-radius: 30px;
-
-}
-
 /* search form styling */
 .search-container {
     background: #f0f4f8;
     padding: 20px;
     border-radius: 12px;
-    max-width: 600px;
+    max-width: 1000px;
     margin: 40px auto;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
