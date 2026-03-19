@@ -1,4 +1,8 @@
 /* search form styling */
+body, html {
+    margin: 0;
+    padding: 0;
+}
 
 .background-banner {
     background-color: #265284;
