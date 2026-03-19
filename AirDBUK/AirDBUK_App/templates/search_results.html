@@ -9,11 +9,16 @@
     <div class="col-lg-4 mb-4">
       <div class="calendar-card p-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
+          <a class="btn btn-sm btn-outline-secondary" href="{% url 'search_results' %}?departure_airport={{ base_query.departure_airport|urlencode }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{ base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}&calendar_month={{ prev_month }}&calendar_year={{ prev_year }}" title="Previous month">
+            &#8249;
+          </a>
           <div>
             <h5 class="mb-0">{{ calendar_month_name }} {{ calendar_year }}</h5>
             <p class="mb-0 text-muted" style="font-size:0.9rem;">Available dates for your search</p>
           </div>
-          <a class="btn btn-sm btn-outline-secondary" href="{% url 'search_results' %}?departure_airport={{ base_query.departure_airport|urlencode }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{ base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}">Refresh</a>
+          <a class="btn btn-sm btn-outline-secondary" href="{% url 'search_results' %}?departure_airport={{ base_query.departure_airport|urlencode }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{ base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}&calendar_month={{ next_month }}&calendar_year={{ next_year }}" title="Next month">
+            &#8250;
+          </a>
         </div>
 
         <table class="calendar-table table table-sm">
