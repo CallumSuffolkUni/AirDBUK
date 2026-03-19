@@ -1,11 +1,15 @@
 /* search form styling */
+
+.background-banner {
+    background-color: #265284;
+}
 .search-container {
-    background: #f0f4f8;
+    background: #ffffff;
     padding: 20px;
     border-radius: 12px;
     max-width: 1000px;
     margin: 40px auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .search-container form {

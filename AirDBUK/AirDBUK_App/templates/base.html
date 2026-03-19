@@ -64,12 +64,10 @@
 
     <!-- Main Content -->
 
-    <div class="main_body col p-4">
-        <div class="container-fluid">
-            <main>
-                {% block content %}{% endblock %}
-            </main>
-        </div>
+    <div class="main_body">
+        <main>
+            {% block content %}{% endblock %}
+        </main>
     </div>
     <!-- autocomplete script -->
     <script src="{% static 'js/autocomplete.js' %}"></script>
