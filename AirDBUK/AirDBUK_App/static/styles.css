@@ -42,6 +42,22 @@
     margin: 0;
 }
 
+/* Generic form input styling */
+.form-input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #265284;
+    box-shadow: 0 0 0 2px rgba(38, 82, 132, 0.1);
+}
+
 /* flight results styling */
 .results {
     margin-top: 30px;

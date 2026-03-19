@@ -82,8 +82,9 @@ def search_results(request):
     if form.is_valid():
         selected_date = form.cleaned_data.get('departure_date') or today
 
-    calendar_year = selected_date.year
-    calendar_month = selected_date.month
+    # Support month/year navigation
+    calendar_year = int(request.GET.get('calendar_year', selected_date.year))
+    calendar_month = int(request.GET.get('calendar_month', selected_date.month))
 
     # Find all available dates for the selected route / class
     available_dates = set()
@@ -104,6 +105,21 @@ def search_results(request):
     # Build a month grid for the calendar
     cal = calendar.Calendar(firstweekday=0)
     calendar_weeks = cal.monthdayscalendar(calendar_year, calendar_month)
+
+    # Calculate previous and next month for navigation
+    if calendar_month == 1:
+        prev_month = 12
+        prev_year = calendar_year - 1
+    else:
+        prev_month = calendar_month - 1
+        prev_year = calendar_year
+
+    if calendar_month == 12:
+        next_month = 1
+        next_year = calendar_year + 1
+    else:
+        next_month = calendar_month + 1
+        next_year = calendar_year
 
     available_days = {
         d.day for d in available_dates
@@ -135,6 +151,10 @@ def search_results(request):
         'available_days': available_days,
         'selected_day': selected_day,
         'base_query': base_query,
+        'prev_month': prev_month,
+        'prev_year': prev_year,
+        'next_month': next_month,
+        'next_year': next_year,
     })
 
 
