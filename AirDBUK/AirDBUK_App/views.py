@@ -198,7 +198,7 @@ def passenger_input (request):
         if formset.is_valid(): 
             for form in formset:
                 form.save()
-            return redirect("confirm_flight")
+            return redirect("payment")
     else:
         formset = PassengerFormSet()
 

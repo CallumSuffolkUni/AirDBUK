@@ -27,9 +27,7 @@
                 {% endfor %}
 
                 <div class="passenger-button">
-                    <a class="btn btn-primary" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}&back={{ request.get_full_path|urlencode }}">
-                        Confirm Passengers
-                    </a>
+                    <button class="btn btn-primary" type="submit">Confirm Passengers</button>
                 </div>
             </form>
             
