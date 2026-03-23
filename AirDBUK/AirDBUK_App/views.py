@@ -7,6 +7,10 @@ from django.db.models import Q
 from .forms import FlightSearchForm, AddPassengerDetails
 from .models import *
 from django.forms import formset_factory
+from users.forms import RegisterUserForm
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 
@@ -186,25 +190,69 @@ def confirm_flight(request):
         'form': search_form,
     })
 
-def passenger_input (request):
+def passenger_input(request):
     flight_id = request.GET.get('flight_id')
     passengers = int(request.GET.get('passengers', 1))
     flight = get_object_or_404(Flight, id=flight_id)
 
     PassengerFormSet = formset_factory(AddPassengerDetails, extra=passengers)
 
+    # Default empty forms for GET request
+    formset = PassengerFormSet(prefix="passengers")
+    login_form = AuthenticationForm()
+    form_b = RegisterUserForm(prefix="register")
+
     if request.method == "POST":
-        formset = PassengerFormSet(request.POST)
-        if formset.is_valid(): 
-            for form in formset:
-                form.save()
-            return redirect("payment")
-    else:
-        formset = PassengerFormSet()
+        action = request.POST.get("action")
+        formset = PassengerFormSet(request.POST, prefix="passengers")
+
+        # --- Already logged in: just save passengers ---
+        if request.user.is_authenticated:
+            if formset.is_valid():
+                for form in formset:
+                    passenger = form.save(commit=False)
+                    passenger.user = request.user
+                    passenger.save()
+                return redirect("payment")
+
+        # --- Not logged in: chose to sign in ---
+        elif action == "login":
+            login_form = AuthenticationForm(request, data=request.POST)
+            if login_form.is_valid() and formset.is_valid():
+                user = login_form.get_user()
+                login(request, user)
+                for form in formset:
+                    passenger = form.save(commit=False)
+                    passenger.user = user
+                    passenger.save()
+                return redirect("payment")
+
+        # --- Not logged in: chose to register ---
+        elif action == "register":
+            form_b = RegisterUserForm(request.POST, prefix="register")
+            if formset.is_valid() and form_b.is_valid():
+                # Save user and log them in
+                user = form_b.save()
+                user = authenticate(
+                    username=form_b.cleaned_data['username'],
+                    password=form_b.cleaned_data['password1']
+                )
+                login(request, user)
+
+                # Save passengers linked to new user
+                for form in formset:
+                    passenger = form.save(commit=False)
+                    passenger.user = user
+                    passenger.save()
+
+                messages.success(request, "Account created successfully!")
+                return redirect("payment")
 
     return render(request, 'passenger_input.html', {
         'flight': flight,
         'passengers': passengers,
         'total_price': flight.Price * passengers,
         'formset': formset,
+        'form_b': form_b,
+        'login_form': login_form,
     })

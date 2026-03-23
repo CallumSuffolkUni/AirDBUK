@@ -8,17 +8,20 @@
     <!-- Different Device Display / Accessibility -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=6.0, user-scalable=yes">
 
-    <!-- Your CSS style-sheet static location -->
-    <link rel="stylesheet" href="{% static 'styles.css' %}"/>
-
     <!-- Font family -->
     <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
 
     <!-- Code to CDN Bootstrap CSS Remote repository -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Font Awesome - Webpage icons -->
     <script src="https://kit.fontawesome.com/f382cfac43.js" crossorigin="anonymous"></script>
+
+    <!-- Your CSS style-sheet static location -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}"/>
 
     <!-- Title block to be used across all templates -->
     <title>{% block title %}AirDBUK{% endblock %}</title>
@@ -53,9 +56,15 @@
             </div>
             <div class="">
                 <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="{% url 'dashboard' %}" role="button">Dashboard</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="btn btn-primary" href="{% url 'login' %}" role="button">Login</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -64,7 +73,7 @@
 
     <!-- Main Content -->
 
-    <div class="main_body">
+    <div class="m-3">
         <main>
             {% if messages %}
                 {% for message in messages %}
@@ -79,5 +88,6 @@
     </div>
     <!-- autocomplete script -->
     <script src="{% static 'js/autocomplete.js' %}"></script>
+    <script src="{% static 'js/passenger_input.js' %}"></script>
 </body>
 </html>

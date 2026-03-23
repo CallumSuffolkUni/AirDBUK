@@ -3,10 +3,8 @@
 
 {% block content %}
 <div class="confirm-page">
-
-    <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to flights</a>
     
-    <h6 class="display-6 page-title mt-3">Confirm Flight Details</h6>
+    <h1 class="mt-3">Confirm Flight Details</h1>
 
     <div class="confirm-grid">
 
@@ -99,13 +97,19 @@
                     {% csrf_token %}
                     <input type="hidden" name="flight_id" value="{{ flight.id }}">
                     <input type="hidden" name="passengers" value="{{ passengers }}">
-                    <a class="btn btn-primary" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&departure_airport={{ form.departure_airport.value|urlencode }}&arrival_airport={{ form.arrival_airport.value|urlencode }}&departure_date={{ form.departure_date.value }}&travel_class={{ form.travel_class.value }}&back={{ request.get_full_path|urlencode }}">
-                        Confirm Booking
-                    </a>
+                    <div class="text-center">
+                        <a class="btn btn-primary" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&back={{ request.get_full_path|urlencode }}">
+                            Confirm Booking
+                        </a>
+                    </div>
                 </form>
                 <p class="muted small text-center mt-2">You won't be charged yet</p>
             </div>
         </div>
+    </div>
+
+    <div class="mt-3">
+        <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to flights</a>
     </div>
 </div>
 {% endblock %}

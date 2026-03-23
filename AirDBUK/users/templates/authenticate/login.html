@@ -1,9 +1,11 @@
 {% extends "base.html" %}
     
-{% block title %}AirDBUK{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container-fluid m-3">
+<div class="container shadow p-4 mb-5 bg-body rounded">
+
+    <h1>Login</h1>
     
     <form method="POST" action="">
         {% csrf_token %}
@@ -17,6 +19,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    <p class="text-center">Not a registered user? Register <a href="{% url 'register_user' %}">here!</a></p>
 </div> 
 
 

@@ -1,12 +1,12 @@
 /* search form styling */
-body, html {
-    margin: 0;
-    padding: 0;
+body {
+    background: #f4f4f4;
 }
 
 .background-banner {
     background-color: #ffffff;
 }
+
 .search-container {
     background: #ffffff;
     padding: 20px;

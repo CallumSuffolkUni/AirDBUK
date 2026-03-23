@@ -1,5 +1,5 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Airport (models.Model):
@@ -34,34 +34,13 @@ class Flight (models.Model):
     def __str__(self):
         return f'{self.Flight_Number} - {self.Departure_Airport} → {self.Arrival_Airport}'
 
-
-class User (models.Model):
-    id = models.AutoField(primary_key=True) #Auto assign primary_key
-    Email = models.EmailField(unique=True, default='')
-    Password = models.CharField(max_length=25, default='')
-    First_Name = models.CharField(max_length=100, default='')
-    Last_Name = models.CharField(max_length=100, default='')
-    Phone = PhoneNumberField()
-    Role = models.CharField(max_length=100, default='')
-
-    class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
-        constraints = [
-            models.UniqueConstraint(fields=['Email', 'Phone'], name='UniqueUser'),
-        ]
-
-    def __str__(self):
-        return f'{self.First_Name} {self.Last_Name}'
-
-
 class Booking (models.Model):
     id = models.AutoField(primary_key=True) #Auto assign primary_key
     Booking_Date = models.DateTimeField()
     Status = models.CharField(max_length=100, default='')
     Total_Price = models.DecimalField(max_digits=10, decimal_places=2)
     Flight_ID = models.ForeignKey(Flight, on_delete=models.SET_NULL, null = True, blank = True, related_name = "bookings") #Foreign Key linking to flight table
-    User_ID = models.ForeignKey(User, on_delete=models.SET_NULL, null = True, blank = True, related_name = "bookings") #Foreign Key linking to user table
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings')
 
     class Meta:
         verbose_name = 'Booking'
@@ -73,7 +52,7 @@ class Passenger (models.Model):
     First_Name = models.CharField(max_length=100, default='')
     Last_Name = models.CharField(max_length=100, default='')
     DOB = models.DateField()
-    User_ID = models.ForeignKey(User, on_delete=models.SET_NULL, null = True, blank = True, related_name = "passengers") #Foreign Key linking to user table
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='passengers')
 
     class Meta:
         verbose_name = 'Passenger'
