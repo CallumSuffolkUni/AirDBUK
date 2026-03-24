@@ -98,6 +98,19 @@ body {
     padding: 0.5rem;
 }
 
+/* sticky top behavior and keep visual design */
+.navbar.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    margin: 0;
+    border-radius: 0 0 16px 16px;
+}
+
+body {
+    padding-top: 80px; /* avoid content hiding under nav */
+}
+
 .navbar-brand {
     font-weight: 500;
     color: #265284;
