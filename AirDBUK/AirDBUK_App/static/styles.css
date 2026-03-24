@@ -90,9 +90,79 @@ body {
     margin: 0;
 }
 
-.home-destinations-grid {
-    margin-top: 100px;
+.navbar {
+    background-color: #fff;
+    height: 80px;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 0.5rem;
 }
+
+.navbar-brand {
+    font-weight: 500;
+    color: #265284;
+    font-size: 24px;
+    transition: 0.3s color;
+}
+
+.login-button {
+    background-color: #265284;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+}
+
+.login-button:hover {
+    background-color: #1d446d;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus, btn-close:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link {
+    color: #666777;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link:active {
+    color: #000;
+}
+
+@media (min-width: 991px) {
+    .nav-link:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: #265284;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+    }
+
+    .nav-link:hover::before, .nav-link:active::before {
+        width: 100%;
+        visibility: visible;
+    }
+
+    .home-destinations-grid {
+        margin-top: 100px;
+    }
+}
+
 
 /* Generic form input styling */
 .form-input {
@@ -109,49 +179,6 @@ body {
     border-color: #265284;
     box-shadow: 0 0 0 2px rgba(38, 82, 132, 0.1);
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 10%;
-}
-
-.logo {
-    cursor: pointer;
-}
-
-.nav__links {
-    list-style: none;
-}
-
-.nav__links li {
-    display: inline-block;
-    padding: 0px 20px;
-}
-
-.nav__links li a  {
-    transition: all 0.3s ease 0s;
-}
-
-.nav__links li a:hover  {
-    color: #0088a9;
-}
-
-.home button {
-    padding: 9px 25px;
-    background-color: rgba(0, 136, 169, 1);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;   
-}
-
-.home button:hover {
-    background-color: rgba(0, 136, 169, 0.8);
-}
-
-
 
 /* flight results styling */
 .results {
