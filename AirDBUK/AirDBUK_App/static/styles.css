@@ -3,18 +3,54 @@ body {
     background: #bcdbff;
 }
 
-.home-header {
+.hero-banner {
     background-image: url("AirDBUK_Background.webp");
-    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.4);
+    min-height: 70vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .search-container {
-    background: #ffffff;
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
     border-radius: 12px;
-    max-width: 1000px;
-    margin: 40px auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .search-container form {
@@ -27,8 +63,9 @@ body {
 .search-container select {
     border: 1px solid #ccc;
     border-radius: 6px;
-    padding: 8px 10px;
+    padding: 10px 12px;
     font-size: 1rem;
+    background: white;
 }
 
 .search-container button {
@@ -36,14 +73,20 @@ body {
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 10px;
-    font-size: 1rem;
+    padding: 12px;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background 0.2s ease;
+    font-weight: 600;
 }
 
 .search-container button:hover {
     background: #1d446d;
+}
+
+/* Remove old home-header styles */
+.home-header {
+    /* Old styles removed */
 }
 
 /* force paragraphs inside form to have minimal spacing */
