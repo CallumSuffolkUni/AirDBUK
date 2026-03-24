@@ -1,21 +1,20 @@
 /* search form styling */
 body {
-    background: #bcdbff;
+    background: #f4f4f4;
 }
 
 .hero-banner {
-    background-image: url("AirDBUK_Background.webp");
+    background-image: url("images/AirDBUK_Background.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 70vh;
     position: relative;
-    display: flex;
     align-items: center;
 }
 
 .hero-overlay {
-    background: rgba(0, 0, 0, 0.4);
+    background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), #f4f4f4);  
     min-height: 70vh;
     width: 100%;
     display: flex;
@@ -27,7 +26,6 @@ body {
     color: white;
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem;
 }
 
 .hero-title {
@@ -44,11 +42,13 @@ body {
 }
 
 .search-container {
+    text-align: start;
     background: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 12px;
-    max-width: 600px;
+    max-width: 1500px;
     margin: 0 auto;
+    color: #000000;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
 }
@@ -84,10 +84,6 @@ body {
     background: #1d446d;
 }
 
-/* Remove old home-header styles */
-.home-header {
-    /* Old styles removed */
-}
 
 /* force paragraphs inside form to have minimal spacing */
 .search-container p {

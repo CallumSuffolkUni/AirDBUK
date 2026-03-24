@@ -23,14 +23,33 @@
                             </div>
                         </div>
 
-                        <!-- Rest of fields full width -->
-                        <div class="mt-2">{{ form.departure_date.label_tag }}{{ form.departure_date }}</div>
-                        <div class="mt-2">{{ form.travel_class.label_tag }}{{ form.travel_class }}</div>
-                        <div class="mt-2">{{ form.passengers.label_tag }}{{ form.passengers }}</div>
+                        <div class="row g-4">
+                            <div class="col-4">
+                                {{ form.departure_date.label_tag }}{{ form.departure_date }}
+                            </div>
+                            <div class="col-4">
+                                {{ form.travel_class.label_tag }}{{ form.travel_class }}
+                            </div>
+                            <div class="col-4">
+                                {{ form.passengers.label_tag }}{{ form.passengers }}
+                            </div>
+                        </div>
+                        
 
                         <button type="submit" class="btn btn-primary mt-3">Search Flights</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container home-destinations-grid">
+    <div class="row">
+        <div class="card" style="width: 18rem;">
+            <a target="_blank" href=""><img src="images/Airport_1.webp" class="card-img-top" alt="Airport_1"></a>
+            <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
             </div>
         </div>
     </div>
