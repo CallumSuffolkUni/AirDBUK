@@ -53,7 +53,17 @@ def dashboard(request):
 
     if request.user.is_superuser:
         context['all_users'] = User.objects.all().order_by('date_joined')
-        context['all_flights'] = Flight.objects.all().select_related('Departure_Airport', 'Arrival_Airport').order_by('Departure_Time')
+
+        query = request.GET.get('flight_query', '').strip()
+        context['flight_query'] = query
+
+        if query:
+            context['flight_results'] = Flight.objects.filter(
+                Flight_Number__icontains=query
+            ).select_related('Departure_Airport', 'Arrival_Airport').order_by('Departure_Time')
+        else:
+            context['flight_results'] = None
+
     else:
         context['bookings'] = Booking.objects.filter(
             user=request.user
@@ -133,6 +143,17 @@ def view_bookings(request, booking_id):
         formset = PassengerFormSet(initial=initial_data)
     
     return render(request, 'authenticate/view_bookings.html', {'formset': formset, 'booking': booking, 'passengers': passengers})
+
+
+def cancel_flight(request, flight_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
+    flight = get_object_or_404(Flight, id=flight_id)
+    flight.Status = 'Cancelled'
+    flight.save()
+    messages.success(request, f"Flight {flight.Flight_Number} cancelled successfully.")
+    return redirect(f"{request.path_info.split('?')[0]}?flight_query={request.GET.get('flight_query','')}")
 
 
 def cancel_booking(request, booking_id):

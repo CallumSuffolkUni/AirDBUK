@@ -35,12 +35,7 @@
                 </div>
                 <hr>
                 <div class="detail-row">
-<<<<<<< HEAD
                     <a href="{% url 'user_bookings' u.id %}" class="btn btn-secondary btn-sm">Edit</a>
-=======
-                    <a href="" class="btn btn-secondary btn-sm">Edit</a>
-                    <a href="" class="btn btn-danger btn-sm">Delete</a>
->>>>>>> 4ddc832c6e52505e76428f045665f92a2906b1ca
                 </div>
             </div>
             {% empty %}
@@ -69,37 +64,55 @@
 
             <div class="card confirm-card mt-3">
                 <div class="section-meta">
-                    <span class="card-label">All Flights</span>
+                    <span class="card-label">Flight Search</span>
                 </div>
-                {% if all_flights %}
-                <div class="detail-row">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Flight</th>
-                                    <th>Route</th>
-                                    <th>Departure</th>
-                                    <th>Arrival</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for flight in all_flights %}
-                                <tr>
-                                    <td>{{ flight.Flight_Number }}</td>
-                                    <td>{{ flight.Departure_Airport.IATA_Code }}→{{ flight.Arrival_Airport.IATA_Code }}</td>
-                                    <td>{{ flight.Departure_Time|date:"d M Y H:i" }}</td>
-                                    <td>{{ flight.Arrival_Time|date:"d M Y H:i" }}</td>
-                                    <td>{{ flight.Status }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                <form method="get" class="p-2">
+                    <div class="form-group">
+                        <label for="flight_query">Search by flight number</label>
+                        <input id="flight_query" name="flight_query" type="text" class="form-control" placeholder="e.g. BA123" value="{{ flight_query|default:'' }}" />
                     </div>
-                </div>
-                {% else %}
-                <div class="detail-row">No flights available.</div>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">Search Flights</button>
+                </form>
+
+                {% if flight_results is not None %}
+                    {% if flight_results %}
+                        <div class="mt-3">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Flight</th>
+                                            <th>Route</th>
+                                            <th>Departure</th>
+                                            <th>Arrival</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for flight in flight_results %}
+                                        <tr>
+                                            <td>{{ flight.Flight_Number }}</td>
+                                            <td>{{ flight.Departure_Airport.IATA_Code }}→{{ flight.Arrival_Airport.IATA_Code }}</td>
+                                            <td>{{ flight.Departure_Time|date:"d M Y H:i" }}</td>
+                                            <td>{{ flight.Arrival_Time|date:"d M Y H:i" }}</td>
+                                            <td>{{ flight.Status }}</td>
+                                            <td>
+                                                {% if flight.Status != 'Cancelled' %}
+                                                    <a href="{% url 'cancel_flight' flight.id %}?flight_query={{ flight_query }}" class="btn btn-danger btn-sm">Cancel</a>
+                                                {% else %}
+                                                    <span class="badge bg-secondary">Cancelled</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="p-2">No flights matched "{{ flight_query }}".</div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
