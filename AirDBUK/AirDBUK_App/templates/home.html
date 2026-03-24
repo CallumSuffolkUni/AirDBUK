@@ -3,27 +3,36 @@
 {% block title %}AirDBUK{% endblock %}
 
 {% block content %}
-<div class="home-header">
-    <div class="container shadow p-4 mb-5 bg-body rounded">
-        <form method="get" action="{% url 'search_results' %}">
-            <div class="row g-2">
-                <div class="col-6">
-                    {{ form.departure_airport.label_tag }}
-                    {{ form.departure_airport }}
-                </div>
-                <div class="col-6">
-                    {{ form.arrival_airport.label_tag }}
-                    {{ form.arrival_airport }}
+<div class="hero-banner">
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to AirDBUK</h1>
+                <p class="hero-subtitle">Find and book your perfect flight</p>
+
+                <div class="search-container">
+                    <form method="get" action="{% url 'search_results' %}">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                {{ form.departure_airport.label_tag }}
+                                {{ form.departure_airport }}
+                            </div>
+                            <div class="col-6">
+                                {{ form.arrival_airport.label_tag }}
+                                {{ form.arrival_airport }}
+                            </div>
+                        </div>
+
+                        <!-- Rest of fields full width -->
+                        <div class="mt-2">{{ form.departure_date.label_tag }}{{ form.departure_date }}</div>
+                        <div class="mt-2">{{ form.travel_class.label_tag }}{{ form.travel_class }}</div>
+                        <div class="mt-2">{{ form.passengers.label_tag }}{{ form.passengers }}</div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Search Flights</button>
+                    </form>
                 </div>
             </div>
-
-            <!-- Rest of fields full width -->
-            <div class="mt-2">{{ form.departure_date.label_tag }}{{ form.departure_date }}</div>
-            <div class="mt-2">{{ form.travel_class.label_tag }}{{ form.travel_class }}</div>
-            <div class="mt-2">{{ form.passengers.label_tag }}{{ form.passengers }}</div>
-
-            <button type="submit" class="btn btn-primary mt-3">Search Flights</button>
-        </form>
+        </div>
     </div>
 </div>
 
