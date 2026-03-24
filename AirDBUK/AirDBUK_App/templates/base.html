@@ -27,49 +27,89 @@
     <title>{% block title %}AirDBUK{% endblock %}</title>
 </head>
 <body>
-    <!-- Nav Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
-        <div class="container-fluid px-4">
-            <!-- Logo -->
-            <a class="navbar-brand" href="/" style="margin-right: 40px;">
-                <img src="{% static 'images/AirDBUK_Logo.png' %}" alt="AirDBUK Logo" style="max-height: 75px; width: auto;">
-            </a>
+<!-- Nav Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <div class="container-fluid px-4">
 
-            <!-- Hamburger Toggle for Mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- Hamburger (mobile only) -->
+        <button class="navbar-toggler border-0 p-0 d-lg-none" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#mobileNav"
+                aria-controls="mobileNav" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <!-- Navigation Items -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active fw-1000" href="/">Book</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Destinations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Info</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="">
-                <ul class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="{% url 'dashboard' %}" role="button">Dashboard</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="{% url 'login' %}" role="button">Login</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+        <!-- Logo (centred on mobile, left on desktop) -->
+        <a class="navbar-brand mx-auto mx-lg-0" href="/">
+            <img src="{% static 'images/AirDBUK_Logo.png' %}" alt="AirDBUK Logo"
+                 style="max-height: 55px; width: auto;">
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Book</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Destinations</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Info</a></li>
+            </ul>
         </div>
-    </nav>
-    <!-- End of Nav Bar-->
+
+        <!-- Login / Dashboard (always visible) -->
+        <div class="d-none d-lg-block">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary" href="{% url 'dashboard' %}">Dashboard</a>
+            {% else %}
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<!-- Mobile Offcanvas Drawer -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel"
+     style="width: 280px; border-right: 1px solid #eee;">
+    <div class="offcanvas-header border-bottom px-4 py-3">
+        <a href="/">
+            <img src="{% static 'images/AirDBUK_Logo.png' %}" alt="AirDBUK Logo"
+                 style="max-height: 45px; width: auto;">
+        </a>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column px-0 py-0">
+
+        <!-- Primary nav links -->
+        <ul class="list-unstyled mb-0">
+            <li>
+                <a href="/" class="d-block px-4 py-3 text-decoration-none fw-semibold text-dark border-bottom"
+                   style="font-size: 1.05rem;">
+                    Book
+                </a>
+            </li>
+            <li>
+                <a href="/" class="d-block px-4 py-3 text-decoration-none fw-semibold text-dark border-bottom"
+                   style="font-size: 1.05rem;">
+                    Destinations
+                </a>
+            </li>
+            <li>
+                <a href="#" class="d-block px-4 py-3 text-decoration-none fw-semibold text-dark border-bottom"
+                   style="font-size: 1.05rem;">
+                    Info
+                </a>
+            </li>
+        </ul>
+
+        <!-- Spacer pushes CTA to bottom -->
+        <div class="mt-auto px-4 py-4 border-top">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary w-100" href="{% url 'dashboard' %}">Dashboard</a>
+            {% else %}
+                <a class="btn btn-primary w-100" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
 
     <!-- Main Content -->
 

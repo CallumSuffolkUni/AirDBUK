@@ -3,8 +3,9 @@ body {
     background: #bcdbff;
 }
 
-.background-banner {
-    background-color: #ffffff;
+.home-header {
+    background-image: url("AirDBUK_Background.webp");
+    height: 200px;
 }
 
 .search-container {
