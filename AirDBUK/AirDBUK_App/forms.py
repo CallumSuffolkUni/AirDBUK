@@ -71,5 +71,4 @@ class AddPassengerDetails(forms.Form):
             "class": "form-input"
         })  
     )
-
-#class 
+ 

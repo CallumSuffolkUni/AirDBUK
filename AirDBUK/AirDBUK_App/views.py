@@ -11,6 +11,8 @@ from users.forms import RegisterUserForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.utils import timezone
+from decimal import Decimal
 
 # Create your views here.
 
@@ -31,9 +33,11 @@ def lookup_airport(value):
 
 
 def home(request):
-    """Render landing page with an empty search form."""
     form = FlightSearchForm()
     return render(request, 'home.html', {'form': form})
+
+def confirmation(request):
+    return render(request, 'confirmation.html')
 
 
 def airport_autocomplete(request): # Simply for when searching what airport to depart and arrive at.
@@ -197,7 +201,6 @@ def passenger_input(request):
 
     PassengerFormSet = formset_factory(AddPassengerDetails, extra=passengers)
 
-    # Default empty forms for GET request
     formset = PassengerFormSet(prefix="passengers")
     login_form = AuthenticationForm()
     form_b = RegisterUserForm(prefix="register")
@@ -206,14 +209,20 @@ def passenger_input(request):
         action = request.POST.get("action")
         formset = PassengerFormSet(request.POST, prefix="passengers")
 
-        # --- Already logged in: just save passengers ---
+        # --- Already logged in ---
         if request.user.is_authenticated:
             if formset.is_valid():
+                passenger_data = []
                 for form in formset:
-                    passenger = form.save(commit=False)
-                    passenger.user = request.user
-                    passenger.save()
-                return redirect("payment")
+                    cd = form.cleaned_data
+                    passenger_data.append({
+                        'First_Name': cd.get('first_name', ''),
+                        'Last_Name': cd.get('last_name', ''),
+                        'DOB': cd['dob'].strftime('%Y-%m-%d') if cd.get('dob') else '',
+                    })
+                request.session['passenger_data'] = passenger_data
+                request.session['total_price'] = str(flight.Price * passengers)
+                return redirect(f"/payment/?flight_id={flight_id}&passengers={passengers}")
 
         # --- Not logged in: chose to sign in ---
         elif action == "login":
@@ -221,32 +230,40 @@ def passenger_input(request):
             if login_form.is_valid() and formset.is_valid():
                 user = login_form.get_user()
                 login(request, user)
+                passenger_data = []
                 for form in formset:
-                    passenger = form.save(commit=False)
-                    passenger.user = user
-                    passenger.save()
-                return redirect("payment")
+                    cd = form.cleaned_data
+                    passenger_data.append({
+                        'First_Name': cd.get('first_name', ''),
+                        'Last_Name': cd.get('last_name', ''),
+                        'DOB': cd['dob'].strftime('%Y-%m-%d') if cd.get('dob') else '',
+                    })
+                request.session['passenger_data'] = passenger_data
+                request.session['total_price'] = str(flight.Price * passengers)
+                return redirect(f"/payment/?flight_id={flight_id}&passengers={passengers}")
 
         # --- Not logged in: chose to register ---
         elif action == "register":
             form_b = RegisterUserForm(request.POST, prefix="register")
             if formset.is_valid() and form_b.is_valid():
-                # Save user and log them in
                 user = form_b.save()
                 user = authenticate(
-                    username=form_b.cleaned_data['username'],
-                    password=form_b.cleaned_data['password1']
+                    username = form_b.cleaned_data['username'],
+                    password = form_b.cleaned_data['password1']
                 )
                 login(request, user)
-
-                # Save passengers linked to new user
+                passenger_data = []
                 for form in formset:
-                    passenger = form.save(commit=False)
-                    passenger.user = user
-                    passenger.save()
-
+                    cd = form.cleaned_data
+                    passenger_data.append({
+                        'First_Name': cd.get('first_name', ''),
+                        'Last_Name': cd.get('last_name', ''),
+                        'DOB': cd['dob'].strftime('%Y-%m-%d') if cd.get('dob') else '',
+                    })
+                request.session['passenger_data'] = passenger_data
+                request.session['total_price'] = str(flight.Price * passengers)
                 messages.success(request, "Account created successfully!")
-                return redirect("payment")
+                return redirect(f"/payment/?flight_id={flight_id}&passengers={passengers}")
 
     return render(request, 'passenger_input.html', {
         'flight': flight,
@@ -255,4 +272,47 @@ def passenger_input(request):
         'formset': formset,
         'form_b': form_b,
         'login_form': login_form,
+    })
+
+def payment(request):
+    flight_id = request.GET.get('flight_id')
+    passengers = int(request.GET.get('passengers', 1))
+
+    passenger_data = request.session.get('passenger_data')
+    
+    total_price = request.session.get('total_price')
+    flight = get_object_or_404(Flight, id=flight_id)
+
+    if request.method == "POST":
+        booking = Booking.objects.create(
+            Booking_Date = timezone.now(),
+            Status = 'Booked',
+            Total_Price = Decimal(total_price),
+            Flight_ID = flight,
+            user = request.user,
+        )
+
+        for p in passenger_data:
+            passenger = Passenger.objects.create(
+                First_Name = p['First_Name'],
+                Last_Name = p['Last_Name'],
+                DOB = datetime.datetime.strptime(p['DOB'], '%Y-%m-%d').date(),
+                user = request.user,
+            )
+
+            Booking_Passenger.objects.create(
+            Booking_ID = booking,
+            Passenger_ID = passenger,
+            )
+
+        del request.session['passenger_data']
+        del request.session['total_price']
+
+        return redirect('confirmation')
+
+    return render(request, 'payment.html', {
+        'flight': flight,
+        'passengers': passengers,
+        'passenger_data': passenger_data,
+        'total_price': total_price,
     })

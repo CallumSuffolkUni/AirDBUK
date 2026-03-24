@@ -6,7 +6,8 @@ urlpatterns = [
     path('search/', views.search_results, name='search_results'),
     path('confirm-flight/', views.confirm_flight, name='confirm_flight'),
     path('passenger-input/', views.passenger_input, name='passenger_input'),
-    #path('payment/', views.payment, name='payment'),
+    path('payment/', views.payment, name='payment'),
+    path('confirmation/', views.confirmation, name='confirmation'),
     # AJAX endpoint for typeahead
     path('ajax/airport-autocomplete/', views.airport_autocomplete, name='airport-autocomplete'),
 ]

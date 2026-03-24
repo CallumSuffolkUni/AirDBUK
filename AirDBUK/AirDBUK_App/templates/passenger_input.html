@@ -91,6 +91,8 @@
     <form method="post">
         {% csrf_token %}
         {{ formset.management_form }}
+        <input type="hidden" name="flight_id" value="{{ flight.id }}">
+        <input type="hidden" name="passengers" value="{{ passengers }}">
         <input type="hidden" name="action" id="action-field" value="login">
 
         <div class="confirm-grid">
@@ -174,9 +176,13 @@
         </div>
 
         <div class="passenger-button mt-3">
-            <a class="btn btn-primary" type="submit" href="">Confirm & Continue</a>
+            <div id="login-section-btn" style="display:block;">
+                <button class="btn btn-primary" type="submit" name="action" value="login">Sign In & Continue</button>
+            </div>
+            <div id="register-section-btn" style="display:none;">
+                <button class="btn btn-primary" type="submit" name="action" value="register">Register & Continue</button>
+            </div>
         </div>
-
     </form>
 </div>
 

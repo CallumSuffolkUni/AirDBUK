@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
+from AirDBUK_App.models import Booking
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 
@@ -44,4 +47,16 @@ def register_user(request):
     })
 
 def dashboard(request):
-    return render(request, 'authenticate/dashboard.html', {})
+    context = {}
+
+    if request.user.is_superuser:
+        context['all_users'] = User.objects.all().order_by('date_joined')
+    else:
+        context['bookings'] = Booking.objects.filter(
+            user=request.user
+        ).select_related(
+            'Flight_ID__Departure_Airport',
+            'Flight_ID__Arrival_Airport'
+        ).order_by('-Booking_Date')
+
+    return render(request, 'authenticate/dashboard.html', context)
