@@ -113,7 +113,7 @@
                 </div>
                 <hr>
                 <div class="detail-row">
-                    <a href="{% url 'view_bookings' %}?user_id={{ u.id }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{% url 'view_bookings' booking.id %}" class="btn btn-secondary btn-sm">Edit</a>
                     <a href="/bookings/delete/{{ booking.id }}/" class="btn btn-danger btn-sm">Cancel</a>
                 </div>
             </div>

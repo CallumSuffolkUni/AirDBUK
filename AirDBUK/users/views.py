@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
-from AirDBUK_App.models import Booking
+from AirDBUK_App.models import Booking, Passenger, Booking_Passenger
+from AirDBUK_App.forms import AddPassengerDetails
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
@@ -61,18 +62,45 @@ def dashboard(request):
 
     return render(request, 'authenticate/dashboard.html', context)
 
-def view_bookings(request):
-    context = {}
-
-    view_booking = get_object_or_404(Booking, pk=pk)
+def view_bookings(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    
+    # Get passengers for this booking
+    booking_passengers = Booking_Passenger.objects.filter(Booking_ID=booking)
+    
     if request.method == "POST":
         form = AddPassengerDetails(request.POST)
         if form.is_valid():
-            form.save()
+            if booking_passengers.exists():
+                # Update existing passenger
+                passenger = booking_passengers.first().Passenger_ID
+                passenger.First_Name = form.cleaned_data['first_name']
+                passenger.Last_Name = form.cleaned_data['last_name']
+                passenger.DOB = form.cleaned_data['dob']
+                passenger.save()
+            else:
+                # Create new passenger
+                passenger = Passenger.objects.create(
+                    First_Name=form.cleaned_data['first_name'],
+                    Last_Name=form.cleaned_data['last_name'],
+                    DOB=form.cleaned_data['dob'],
+                    user=request.user
+                )
+                Booking_Passenger.objects.create(
+                    Booking_ID=booking,
+                    Passenger_ID=passenger
+                )
+            messages.success(request, "Passenger details updated successfully.")
             return redirect('dashboard')
     else:
-        # Pulling the pre-filled form
-        form = AddPassengerDetails()
-    return render(request, "authenticate/dashboard.html", {"form": form, "is_edit": True})
-
-    return render(request, 'authenticate/view_bookings.html')
+        if booking_passengers.exists():
+            passenger = booking_passengers.first().Passenger_ID
+            form = AddPassengerDetails(initial={
+                'first_name': passenger.First_Name,
+                'last_name': passenger.Last_Name,
+                'dob': passenger.DOB,
+            })
+        else:
+            form = AddPassengerDetails()
+    
+    return render(request, 'authenticate/view_bookings.html', {'form': form, 'booking': booking})
