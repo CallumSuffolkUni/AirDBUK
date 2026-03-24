@@ -70,13 +70,19 @@ def view_bookings(request, booking_id):
     booking_passengers = Booking_Passenger.objects.filter(Booking_ID=booking).select_related('Passenger_ID')
     passengers = [bp.Passenger_ID for bp in booking_passengers]
     
-    PassengerFormSet = formset_factory(AddPassengerDetails, extra=1)  # Allow adding one more
+    PassengerFormSet = formset_factory(AddPassengerDetails, extra=1, can_delete=True)  # Allow adding one more and deleting
     
     if request.method == "POST":
         formset = PassengerFormSet(request.POST)
         if formset.is_valid():
             for i, form in enumerate(formset):
-                if form.cleaned_data:  # Only if form has data
+                if form.cleaned_data.get('DELETE', False):
+                    # Delete the passenger
+                    if i < len(passengers):
+                        passenger = passengers[i]
+                        Booking_Passenger.objects.filter(Booking_ID=booking, Passenger_ID=passenger).delete()
+                        # Optionally delete the passenger if not used elsewhere, but for now keep
+                elif form.cleaned_data:  # Only if form has data and not deleted
                     if i < len(passengers):
                         # Update existing passenger
                         passenger = passengers[i]
@@ -96,6 +102,10 @@ def view_bookings(request, booking_id):
                             Booking_ID=booking,
                             Passenger_ID=passenger
                         )
+            # Update the total price based on current passengers
+            current_passengers = Booking_Passenger.objects.filter(Booking_ID=booking)
+            booking.Total_Price = len(current_passengers) * booking.Flight_ID.Price
+            booking.save()
             messages.success(request, "Passenger details updated successfully.")
             return redirect('dashboard')
     else:
