@@ -43,6 +43,7 @@
 
                 {% for form in formset %}
                 <div class="card confirm-card mt-4">
+                    <h4>Passenger {{ forloop.counter }}</h4>
                     <div class="form-group">
                         <label for="{{ form.first_name.id_for_label }}">First Name</label>
                         {{ form.first_name }}

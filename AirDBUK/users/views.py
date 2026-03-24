@@ -7,6 +7,7 @@ from AirDBUK_App.models import Booking, Passenger, Booking_Passenger
 from AirDBUK_App.forms import AddPassengerDetails
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.forms import formset_factory
 
 # Create your views here.
 
@@ -66,41 +67,45 @@ def view_bookings(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
     
     # Get passengers for this booking
-    booking_passengers = Booking_Passenger.objects.filter(Booking_ID=booking)
+    booking_passengers = Booking_Passenger.objects.filter(Booking_ID=booking).select_related('Passenger_ID')
+    passengers = [bp.Passenger_ID for bp in booking_passengers]
+    
+    PassengerFormSet = formset_factory(AddPassengerDetails, extra=1)  # Allow adding one more
     
     if request.method == "POST":
-        form = AddPassengerDetails(request.POST)
-        if form.is_valid():
-            if booking_passengers.exists():
-                # Update existing passenger
-                passenger = booking_passengers.first().Passenger_ID
-                passenger.First_Name = form.cleaned_data['first_name']
-                passenger.Last_Name = form.cleaned_data['last_name']
-                passenger.DOB = form.cleaned_data['dob']
-                passenger.save()
-            else:
-                # Create new passenger
-                passenger = Passenger.objects.create(
-                    First_Name=form.cleaned_data['first_name'],
-                    Last_Name=form.cleaned_data['last_name'],
-                    DOB=form.cleaned_data['dob'],
-                    user=request.user
-                )
-                Booking_Passenger.objects.create(
-                    Booking_ID=booking,
-                    Passenger_ID=passenger
-                )
+        formset = PassengerFormSet(request.POST)
+        if formset.is_valid():
+            for i, form in enumerate(formset):
+                if form.cleaned_data:  # Only if form has data
+                    if i < len(passengers):
+                        # Update existing passenger
+                        passenger = passengers[i]
+                        passenger.First_Name = form.cleaned_data['first_name']
+                        passenger.Last_Name = form.cleaned_data['last_name']
+                        passenger.DOB = form.cleaned_data['dob']
+                        passenger.save()
+                    else:
+                        # Create new passenger
+                        passenger = Passenger.objects.create(
+                            First_Name=form.cleaned_data['first_name'],
+                            Last_Name=form.cleaned_data['last_name'],
+                            DOB=form.cleaned_data['dob'],
+                            user=request.user
+                        )
+                        Booking_Passenger.objects.create(
+                            Booking_ID=booking,
+                            Passenger_ID=passenger
+                        )
             messages.success(request, "Passenger details updated successfully.")
             return redirect('dashboard')
     else:
-        if booking_passengers.exists():
-            passenger = booking_passengers.first().Passenger_ID
-            form = AddPassengerDetails(initial={
+        initial_data = []
+        for passenger in passengers:
+            initial_data.append({
                 'first_name': passenger.First_Name,
                 'last_name': passenger.Last_Name,
                 'dob': passenger.DOB,
             })
-        else:
-            form = AddPassengerDetails()
+        formset = PassengerFormSet(initial=initial_data)
     
-    return render(request, 'authenticate/view_bookings.html', {'form': form, 'booking': booking})
+    return render(request, 'authenticate/view_bookings.html', {'formset': formset, 'booking': booking, 'passengers': passengers})
