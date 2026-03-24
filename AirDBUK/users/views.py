@@ -66,13 +66,13 @@ def view_bookings(request):
 
     view_booking = get_object_or_404(Booking, pk=pk)
     if request.method == "POST":
-        form = AddPacForm(request.POST, instance=pac)
+        form = AddPassengerDetails(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("pacs")
+            return redirect('dashboard')
     else:
         # Pulling the pre-filled form
-        form = AddPacForm(instance=pac)
-    return render(request, "pac_form.html", {"form": form, "pac": pac, "is_edit": True})
+        form = AddPassengerDetails()
+    return render(request, "authenticate/dashboard.html", {"form": form, "is_edit": True})
 
     return render(request, 'authenticate/view_bookings.html')
