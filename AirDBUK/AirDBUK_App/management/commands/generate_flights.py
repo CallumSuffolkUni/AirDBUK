@@ -19,7 +19,7 @@ ROW MATHS:
   Total routes                     =   690
   Flights per route (92 days ÷ 7)  =    13
   Total flights    690 × 13        = 8,970
-  Total rows       8,970 × 3       = 26,910  ✅ under 27,000 CleverCloud cap
+  Total rows       8,970 × 3       = 26,910 
 """
 
 import csv

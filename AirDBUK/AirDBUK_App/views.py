@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils import timezone
 from decimal import Decimal
+from django.core.management import call_command
 
 # Create your views here.
 
@@ -33,6 +34,7 @@ def lookup_airport(value):
 
 
 def home(request):
+    call_command('update_flight_status')
     form = FlightSearchForm()
     return render(request, 'home.html', {'form': form})
 
@@ -76,6 +78,7 @@ def _perform_search(form):
         Departure_Airport=from_airport,
         Arrival_Airport=to_airport,
         Departure_Time__date=departure_date,
+        Status='Scheduled',
     )
 
 def search_results(request):
@@ -105,6 +108,7 @@ def search_results(request):
         qs = Flight.objects.filter(
             Departure_Airport=from_airport,
             Arrival_Airport=to_airport,
+            Status='Scheduled',
         )
         if travel_class:
             qs = qs.filter(Travel_Class=travel_class)

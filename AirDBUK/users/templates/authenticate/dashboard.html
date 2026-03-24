@@ -35,8 +35,8 @@
                 </div>
                 <hr>
                 <div class="detail-row">
-                    <a href="/users/edit/{{ u.id }}/" class="btn btn-secondary btn-sm">Edit</a>
-                    <a href="/users/delete/{{ u.id }}/" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'view_bookings' %}?user_id={{ u.id }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{% url 'delete_bookings' %}?user_id={{ u.id }}" class="btn btn-danger btn-sm">Delete</a>
                 </div>
             </div>
             {% empty %}
@@ -74,7 +74,6 @@
             <div class="card confirm-card mb-3">
                 <div class="section-meta">
                     <span class="card-label">Booking #{{ booking.id }}</span>
-                    <span class="badge badge-success">{{ booking.Status }}</span>
                 </div>
                 <div class="route-row">
                     <div class="airport-block">
@@ -97,9 +96,12 @@
                         <div class="flight-time">{{ booking.Flight_ID.Arrival_Time|date:"H:i" }}</div>
                     </div>
                 </div>
-                <p class="flight-meta">
+                <div class="detail-row">
+                    <p class="flight-meta">
                     {{ booking.Flight_ID.Flight_Number }} &nbsp;·&nbsp; {{ booking.Flight_ID.Departure_Time|date:"D d M Y" }}
-                </p>
+                    </p>
+                    <h6 class="text-end mt-2"><span class="badge text-bg-primary">{{ booking.Flight_ID.Status }}</span></h6>
+                </div>
                 <hr>
                 <div class="detail-row">
                     <span>Total Paid</span>
