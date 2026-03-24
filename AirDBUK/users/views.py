@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -153,7 +154,11 @@ def cancel_flight(request, flight_id):
     flight.Status = 'Cancelled'
     flight.save()
     messages.success(request, f"Flight {flight.Flight_Number} cancelled successfully.")
-    return redirect(f"{request.path_info.split('?')[0]}?flight_query={request.GET.get('flight_query','')}")
+
+    query = request.GET.get('flight_query', '')
+    if query:
+        return redirect(f"{reverse('dashboard')}?flight_query={query}")
+    return redirect('dashboard')
 
 
 def cancel_booking(request, booking_id):
