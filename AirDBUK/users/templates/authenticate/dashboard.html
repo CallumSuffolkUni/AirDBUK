@@ -71,7 +71,7 @@
     <div class="confirm-grid">
         <div class="confirm-left">
             {% for booking in bookings %}
-            <div class="card confirm-card mb-3">
+            <div class="card confirm-card mb-3{% if booking.Status == 'Cancelled' %} cancelled-booking{% endif %}">
                 <div class="section-meta">
                     <span class="card-label">Booking #{{ booking.id }}</span>
                 </div>
@@ -100,7 +100,13 @@
                     <p class="flight-meta">
                     {{ booking.Flight_ID.Flight_Number }} &nbsp;·&nbsp; {{ booking.Flight_ID.Departure_Time|date:"D d M Y" }}
                     </p>
-                    <h6 class="text-end mt-2"><span class="badge text-bg-primary">{{ booking.Flight_ID.Status }}</span></h6>
+                    <h6 class="text-end mt-2">
+                        {% if booking.Status == 'Cancelled' %}
+                            <span class="badge text-bg-danger">Cancelled</span>
+                        {% else %}
+                            <span class="badge text-bg-primary">{{ booking.Flight_ID.Status }}</span>
+                        {% endif %}
+                    </h6>
                 </div>
                 <hr>
                 <div class="detail-row">
@@ -112,10 +118,12 @@
                     <span>{{ booking.Booking_Date|date:"d M Y" }}</span>
                 </div>
                 <hr>
+                {% if booking.Status != 'Cancelled' and booking.Flight_ID.Status == 'Scheduled' %}
                 <div class="detail-row">
                     <a href="{% url 'view_bookings' booking.id %}" class="btn btn-secondary btn-sm">Edit</a>
-                    <a href="/bookings/delete/{{ booking.id }}/" class="btn btn-danger btn-sm">Cancel</a>
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm">Cancel</a>
                 </div>
+                {% endif %}
             </div>
             {% empty %}
             <div class="card confirm-card mb-3">

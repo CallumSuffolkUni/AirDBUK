@@ -70,7 +70,7 @@ def view_bookings(request, booking_id):
     booking_passengers = Booking_Passenger.objects.filter(Booking_ID=booking).select_related('Passenger_ID')
     passengers = [bp.Passenger_ID for bp in booking_passengers]
     
-    PassengerFormSet = formset_factory(AddPassengerDetails, extra=1, can_delete=True)  # Allow adding one more and deleting
+    PassengerFormSet = formset_factory(AddPassengerDetails, extra=0, can_delete=True)  # No extra forms, allow deleting
     
     if request.method == "POST":
         formset = PassengerFormSet(request.POST)
@@ -119,3 +119,10 @@ def view_bookings(request, booking_id):
         formset = PassengerFormSet(initial=initial_data)
     
     return render(request, 'authenticate/view_bookings.html', {'formset': formset, 'booking': booking, 'passengers': passengers})
+
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    booking.Status = 'Cancelled'
+    booking.save()
+    messages.success(request, "Booking cancelled successfully.")
+    return redirect('dashboard')
