@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-evmww6ll4#6_5o5bi5rzxorsq09ef6n**$wdrg*9t(bzqgw_(6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['airdbuk.onrender.com']
+ALLOWED_HOSTS = ['airdbuk.onrender.com', '127.0.0.1']
 
 CONN_MAX_AGE = 0
 

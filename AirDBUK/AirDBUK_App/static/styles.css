@@ -110,6 +110,49 @@ body {
     box-shadow: 0 0 0 2px rgba(38, 82, 132, 0.1);
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.nav__links {
+    list-style: none;
+}
+
+.nav__links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav__links li a  {
+    transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover  {
+    color: #0088a9;
+}
+
+.home button {
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;   
+}
+
+.home button:hover {
+    background-color: rgba(0, 136, 169, 0.8);
+}
+
+
+
 /* flight results styling */
 .results {
     margin-top: 30px;
