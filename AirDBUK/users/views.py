@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
-from AirDBUK_App.models import Booking, Passenger, Booking_Passenger
+from AirDBUK_App.models import Booking, Passenger, Booking_Passenger, Flight
 from AirDBUK_App.forms import AddPassengerDetails
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
@@ -53,6 +53,7 @@ def dashboard(request):
 
     if request.user.is_superuser:
         context['all_users'] = User.objects.all().order_by('date_joined')
+        context['all_flights'] = Flight.objects.all().select_related('Departure_Airport', 'Arrival_Airport').order_by('Departure_Time')
     else:
         context['bookings'] = Booking.objects.filter(
             user=request.user
@@ -63,40 +64,53 @@ def dashboard(request):
 
     return render(request, 'authenticate/dashboard.html', context)
 
+
+def user_bookings(request, user_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
+    target_user = get_object_or_404(User, id=user_id)
+    bookings = Booking.objects.filter(user=target_user).select_related(
+        'Flight_ID__Departure_Airport',
+        'Flight_ID__Arrival_Airport'
+    ).order_by('-Booking_Date')
+
+    return render(request, 'authenticate/user_bookings.html', {'target_user': target_user, 'bookings': bookings})
+
+
 def view_bookings(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    if request.user.is_superuser:
+        booking = get_object_or_404(Booking, id=booking_id)
+    else:
+        booking = get_object_or_404(Booking, id=booking_id, user=request.user)
     
     # Get passengers for this booking
     booking_passengers = Booking_Passenger.objects.filter(Booking_ID=booking).select_related('Passenger_ID')
     passengers = [bp.Passenger_ID for bp in booking_passengers]
     
     PassengerFormSet = formset_factory(AddPassengerDetails, extra=0, can_delete=True)  # No extra forms, allow deleting
-    
+
     if request.method == "POST":
         formset = PassengerFormSet(request.POST)
         if formset.is_valid():
             for i, form in enumerate(formset):
                 if form.cleaned_data.get('DELETE', False):
-                    # Delete the passenger
                     if i < len(passengers):
                         passenger = passengers[i]
                         Booking_Passenger.objects.filter(Booking_ID=booking, Passenger_ID=passenger).delete()
-                        # Optionally delete the passenger if not used elsewhere, but for now keep
-                elif form.cleaned_data:  # Only if form has data and not deleted
+                elif form.cleaned_data:
                     if i < len(passengers):
-                        # Update existing passenger
                         passenger = passengers[i]
                         passenger.First_Name = form.cleaned_data['first_name']
                         passenger.Last_Name = form.cleaned_data['last_name']
                         passenger.DOB = form.cleaned_data['dob']
                         passenger.save()
                     else:
-                        # Create new passenger
                         passenger = Passenger.objects.create(
                             First_Name=form.cleaned_data['first_name'],
                             Last_Name=form.cleaned_data['last_name'],
                             DOB=form.cleaned_data['dob'],
-                            user=request.user
+                            user=booking.user if booking.user else request.user
                         )
                         Booking_Passenger.objects.create(
                             Booking_ID=booking,
@@ -120,8 +134,13 @@ def view_bookings(request, booking_id):
     
     return render(request, 'authenticate/view_bookings.html', {'formset': formset, 'booking': booking, 'passengers': passengers})
 
+
 def cancel_booking(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    if request.user.is_superuser:
+        booking = get_object_or_404(Booking, id=booking_id)
+    else:
+        booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+
     booking.Status = 'Cancelled'
     booking.save()
     messages.success(request, "Booking cancelled successfully.")

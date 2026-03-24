@@ -35,8 +35,7 @@
                 </div>
                 <hr>
                 <div class="detail-row">
-                    <a href="{% url 'view_bookings' %}?user_id={{ u.id }}" class="btn btn-secondary btn-sm">Edit</a>
-                    <a href="{% url 'delete_bookings' %}?user_id={{ u.id }}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'user_bookings' u.id %}" class="btn btn-secondary btn-sm">Edit</a>
                 </div>
             </div>
             {% empty %}
@@ -61,6 +60,42 @@
                 </div>
                 <hr>
                 <a class="btn btn-secondary w-100" href="{% url 'logout' %}">Logout</a>
+            </div>
+
+            <div class="card confirm-card mt-3">
+                <div class="section-meta">
+                    <span class="card-label">All Flights</span>
+                </div>
+                {% if all_flights %}
+                <div class="detail-row">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Flight</th>
+                                    <th>Route</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for flight in all_flights %}
+                                <tr>
+                                    <td>{{ flight.Flight_Number }}</td>
+                                    <td>{{ flight.Departure_Airport.IATA_Code }}→{{ flight.Arrival_Airport.IATA_Code }}</td>
+                                    <td>{{ flight.Departure_Time|date:"d M Y H:i" }}</td>
+                                    <td>{{ flight.Arrival_Time|date:"d M Y H:i" }}</td>
+                                    <td>{{ flight.Status }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                <div class="detail-row">No flights available.</div>
+                {% endif %}
             </div>
         </div>
     </div>
