@@ -14,11 +14,11 @@
                 <div class="section-meta">
                     <span class="card-label">{{ u.first_name }} {{ u.last_name }}</span>
                     {% if u.is_superuser %}
-                        <span class="badge badge-danger">Superuser</span>
+                        <span class="badge text-bg-danger">Superuser</span>
                     {% elif u.is_staff %}
-                        <span class="badge badge-warning">Staff</span>
+                        <span class="badge text-bg-warning">Staff</span>
                     {% else %}
-                        <span class="badge badge-success">User</span>
+                        <span class="badge text-bg-success">User</span>
                     {% endif %}
                 </div>
                 <div class="detail-row">
@@ -35,8 +35,8 @@
                 </div>
                 <hr>
                 <div class="detail-row">
-                    <a href="{% url 'view_bookings' %}?user_id={{ u.id }}" class="btn btn-secondary btn-sm">Edit</a>
-                    <a href="{% url 'delete_bookings' %}?user_id={{ u.id }}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'view_bookings' booking.id %}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="" class="btn btn-danger btn-sm">Delete</a>
                 </div>
             </div>
             {% empty %}
