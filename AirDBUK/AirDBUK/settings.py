@@ -89,7 +89,7 @@ DATABASES = {
         'HOST': 'bhqxgza1j25vgtvphhdc-mysql.services.clever-cloud.com',
         'PORT': '3306',
         'OPTIONS': {
-            'ssl_disabled': True,
+            'ssl': {},
             'charset': 'utf8mb4',
         },
         'CONN_MAX_AGE': 0,
