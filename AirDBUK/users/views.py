@@ -89,6 +89,27 @@ def user_bookings(request, user_id):
     return render(request, 'authenticate/user_bookings.html', {'target_user': target_user, 'bookings': bookings})
 
 
+def delete_user(request, user_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
+    target_user = get_object_or_404(User, id=user_id)
+
+    if target_user == request.user:
+        messages.error(request, "You cannot delete your own superuser account.")
+        return redirect('dashboard')
+
+    # Cancel existing bookings before delete (request asks for cancel any bookings)
+    user_bookings = Booking.objects.filter(user=target_user)
+    for booking in user_bookings:
+        booking.Status = 'Cancelled'
+        booking.save()
+
+    target_user.delete()
+    messages.success(request, "User and their bookings have been deleted/cancelled successfully.")
+    return redirect('dashboard')
+
+
 def view_bookings(request, booking_id):
     if request.user.is_superuser:
         booking = get_object_or_404(Booking, id=booking_id)

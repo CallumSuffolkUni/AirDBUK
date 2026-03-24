@@ -36,6 +36,7 @@
                 <hr>
                 <div class="detail-row">
                     <a href="{% url 'user_bookings' u.id %}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{% url 'delete_user' u.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Delete user and cancel all their bookings?');">Delete</a>
                 </div>
             </div>
             {% empty %}
