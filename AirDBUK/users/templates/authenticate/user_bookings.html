@@ -40,7 +40,7 @@
             <hr>
             <div class="detail-row">
                 <a href="{% url 'view_bookings' booking.id %}" class="btn btn-secondary btn-sm">View / Edit</a>
-                {% if booking.Status != 'Cancelled' and booking.Flight_ID.Status == 'Scheduled' %}
+                {% if booking.Status != 'Cancelled' %}
                 <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Cancel this booking?');">Cancel Booking</a>
                 {% endif %}
             </div>
