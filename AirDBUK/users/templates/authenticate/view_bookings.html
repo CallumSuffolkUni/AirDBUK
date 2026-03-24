@@ -36,23 +36,33 @@
             </p>
         </div>
     </div>
-    
-    <form method="post" class="mt-4">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="{{ form.first_name.id_for_label }}">First Name</label>
-            {{ form.first_name }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
-            {{ form.last_name }}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.dob.id_for_label }}">Date of Birth</label>
-            {{ form.dob }}
-        </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ formset.management_form }}
+
+                {% for form in formset %}
+                <div class="card confirm-card mt-4">
+                    <div class="form-group">
+                        <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.dob.id_for_label }}">Date of Birth</label>
+                        {{ form.dob }}
+                    </div>
+                    
+                </div>
+                {% endfor %}
+
+            <br>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </form>
 </div>
 {% endblock %}
