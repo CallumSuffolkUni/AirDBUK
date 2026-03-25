@@ -2,6 +2,7 @@
 {% block title %}Manage User Bookings{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="user_bookings">
     <div class="container mt-3">
         <h1 class="mt-3">Bookings for {{ target_user.first_name }} {{ target_user.last_name }} ({% if target_user.username %}{{ target_user.username }}{% endif %})</h1>

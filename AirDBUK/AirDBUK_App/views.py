@@ -35,7 +35,11 @@ def lookup_airport(value):
 
 def home(request):
     call_command('update_flight_status')
-    form = FlightSearchForm()
+    initial = {
+        'departure_airport': request.GET.get('departure_airport', ''),
+        'arrival_airport': request.GET.get('arrival_airport', ''),
+    }
+    form = FlightSearchForm(initial=initial)
     return render(request, 'home.html', {'form': form})
 
 def confirmation(request):
@@ -320,3 +324,6 @@ def payment(request):
         'passenger_data': passenger_data,
         'total_price': total_price,
     })
+
+def destinations(request):
+    return render(request, 'destination.html')

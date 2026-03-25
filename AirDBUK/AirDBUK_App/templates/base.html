@@ -48,10 +48,7 @@
                             <a class="nav-link mx-lg-2" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="#">Destination</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="#">Info</a>
+                            <a class="nav-link mx-lg-2" href="{% url 'destinations' %}">Destinations</a>
                         </li>
                     </ul>
                 </div>
@@ -87,6 +84,10 @@
     <script src="{% static 'js/autocomplete.js' %}"></script>
     <script src="{% static 'js/passenger_input.js' %}"></script>
     <script src="{% static 'js/fillSearch.js' %}"></script>
+    <script src="{% static 'js/destinations.js' %}"></script>
+    
+    <script>window.HOME_URL = "{% url 'home' %}";</script>
+
 </body>
 
 </html>

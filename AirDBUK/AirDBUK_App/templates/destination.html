@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Destinations{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="destinations-page">
+    <div class="container py-5">
+
+        <h1 class="destinations-title">Popular Destinations</h1>
+        <p class="destinations-subtitle">Pick a destination and we'll get you there</p>
+
+        <div class="destinations-grid">
+
+            <div class="dest-card" onclick="goToFlight('London, LHR, (Heathrow Airport)', 'Manchester, MAN, (Manchester Airport)')">
+                <img src="{% static 'images/Airport_1.webp' %}" alt="Manchester" class="dest-img">
+                <div class="dest-overlay">
+                    <div class="dest-route">
+                        <span class="dest-iata">LHR</span>
+                        <span class="dest-arrow">→</span>
+                        <span class="dest-iata">MAN</span>
+                    </div>
+                    <div class="dest-name">Manchester</div>
+                    <div class="dest-desc">Music, nightlife & festivals await</div>
+                    <div class="dest-cta">Search Flights</div>
+                </div>
+            </div>
+
+            <div class="dest-card" onclick="goToFlight('London, LHR, (Heathrow Airport)', 'Edinburgh, EDI, (Edinburgh Airport)')">
+                <img src="{% static 'images/Airport_2.webp' %}" alt="Edinburgh" class="dest-img">
+                <div class="dest-overlay">
+                    <div class="dest-route">
+                        <span class="dest-iata">LHR</span>
+                        <span class="dest-arrow">→</span>
+                        <span class="dest-iata">EDI</span>
+                    </div>
+                    <div class="dest-name">Edinburgh</div>
+                    <div class="dest-desc">History, architecture & highland charm</div>
+                    <div class="dest-cta">Search Flights</div>
+                </div>
+            </div>
+
+            <div class="dest-card" onclick="goToFlight('London, LHR, (Heathrow Airport)', 'Cardiff, CWL, (Cardiff Airport)')">
+                <img src="{% static 'images/Airport_3.webp' %}" alt="Cardiff" class="dest-img">
+                <div class="dest-overlay">
+                    <div class="dest-route">
+                        <span class="dest-iata">LHR</span>
+                        <span class="dest-arrow">→</span>
+                        <span class="dest-iata">CWL</span>
+                    </div>
+                    <div class="dest-name">Cardiff</div>
+                    <div class="dest-desc">Rugby, castles & Welsh culture</div>
+                    <div class="dest-cta">Search Flights</div>
+                </div>
+            </div>
+
+            <div class="dest-card" onclick="goToFlight('London, LHR, (Heathrow Airport)', 'Newcastle, NCL, (Newcastle Airport)')">
+                <img src="{% static 'images/Airport_4.webp' %}" alt="Newcastle" class="dest-img">
+                <div class="dest-overlay">
+                    <div class="dest-route">
+                        <span class="dest-iata">LHR</span>
+                        <span class="dest-arrow">→</span>
+                        <span class="dest-iata">NCL</span>
+                    </div>
+                    <div class="dest-name">Newcastle</div>
+                    <div class="dest-desc">Geordie spirit & iconic quayside</div>
+                    <div class="dest-cta">Search Flights</div>
+                </div>
+            </div>
+
+            <div class="dest-card" onclick="goToFlight('London, LHR, (Heathrow Airport)', 'Southend, SEN, (Southend Airport)')">
+                <img src="{% static 'images/Airport_5.webp' %}" alt="Southend" class="dest-img">
+                <div class="dest-overlay">
+                    <div class="dest-route">
+                        <span class="dest-iata">LHR</span>
+                        <span class="dest-arrow">→</span>
+                        <span class="dest-iata">SEN</span>
+                    </div>
+                    <div class="dest-name">Southend-on-Sea</div>
+                    <div class="dest-desc">Seaside charm & coastal escapes</div>
+                    <div class="dest-cta">Search Flights</div>
+                </div>
+            </div>
+
+            <div class="dest-card" onclick="goToFlight('London, LHR, (Heathrow Airport)', 'Glasgow, GLA, (Glasgow Airport)')">
+                <img src="{% static 'images/Airport_6.webp' %}" alt="Glasgow" class="dest-img">
+                <div class="dest-overlay">
+                    <div class="dest-route">
+                        <span class="dest-iata">LHR</span>
+                        <span class="dest-arrow">→</span>
+                        <span class="dest-iata">GLA</span>
+                    </div>
+                    <div class="dest-name">Glasgow</div>
+                    <div class="dest-desc">Art, culture & incredible food scene</div>
+                    <div class="dest-cta">Search Flights</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

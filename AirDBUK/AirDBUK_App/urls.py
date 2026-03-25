@@ -8,6 +8,7 @@ urlpatterns = [
     path('passenger-input/', views.passenger_input, name='passenger_input'),
     path('payment/', views.payment, name='payment'),
     path('confirmation/', views.confirmation, name='confirmation'),
+    path('destinations/', views.destinations, name='destinations'),
     # AJAX endpoint for typeahead
     path('ajax/airport-autocomplete/', views.airport_autocomplete, name='airport-autocomplete'),
 ]

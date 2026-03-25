@@ -429,17 +429,42 @@ button.account_button_secondary:hover {
     }
 }
 
-.search_results{
-    background-color: #f4f4f4;
-    background-image: url("images/AirDBUK_Background.webp");
+.search_results {
+    position: relative;
+}
+
+.search_results::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("../images/AirDBUK_Background.webp");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    min-height: 100vh;
-    padding-bottom: 3rem;
-    align-items: flex-start;
-    justify-content: center;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.search_results > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+@media (max-width: 576px) {
+    .step-label {
+        display: none;
+    }
+
+    .progress-line {
+        flex: 0 0 20px;
+        margin: 0 4px;
+    }
+}
+
+@media (max-width: 400px) {
+    .hero-title {
+        font-size: 1.75rem;
+    }
 }
 
 .confirmation-card {
@@ -872,6 +897,128 @@ button.account_button_secondary:hover {
 .cancelled-booking {
     opacity: 0.6;
     background-color: #f8f9fa;
+}
+
+.destinations-page {
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+.destinations-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 0.25rem;
+}
+
+.destinations-subtitle {
+    color: #6c757d;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.dest-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 260px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dest-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.dest-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.dest-card:hover .dest-img {
+    transform: scale(1.05);
+}
+
+.dest-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 30, 55, 0.92) 40%, rgba(15, 30, 55, 0.2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.25rem;
+    color: #fff;
+}
+
+.dest-route {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.dest-iata {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #7ab8e8;
+}
+
+.dest-arrow {
+    color: #7ab8e8;
+    font-size: 13px;
+}
+
+.dest-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.dest-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 10px;
+}
+
+.dest-cta {
+    display: inline-block;
+    background-color: #265284;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    width: fit-content;
+    transition: background-color 0.2s ease;
+}
+
+.dest-card:hover .dest-cta {
+    background-color: #1d446d;
+}
+
+@media (max-width: 768px) {
+    .destinations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 
