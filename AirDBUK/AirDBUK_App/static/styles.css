@@ -130,6 +130,25 @@ body .search_results {
     min-height: 100vh;
 }
 
+.confirmation-page {
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.payment-page {
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.hero-home {
+    background-color: #fff;
+    padding-bottom: 1rem;
+}
+
+.passenger-input-page {
+    background-color: #fff;
+}
+
 /* sticky top behavior and keep visual design */
 .navbar.sticky-top {
     position: sticky;
@@ -606,4 +625,445 @@ body .search_results {
 .cancelled-booking {
     opacity: 0.6;
     background-color: #f8f9fa;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* ENHANCED CONSISTENT STYLING FOR ALL PAGES                     */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page Container Styles ─────────────────────────────────────── */
+
+.container {
+    max-width: 1200px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #212529;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 1.5rem 0 1rem 0;
+}
+
+h2 {
+    font-size: 1.75rem;
+    margin: 1.25rem 0 0.875rem 0;
+}
+
+h6.display-6 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+p {
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+/* ── Card Styling ──────────────────────────────────────────────── */
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 1.5rem;
+}
+
+/* ── Button Styling ────────────────────────────────────────────── */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #265284;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #1d446d;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+}
+
+/* ── Form Input Styling ────────────────────────────────────────── */
+
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 0.75rem 0.875rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #265284;
+    box-shadow: 0 0 0 3px rgba(38, 82, 132, 0.1);
+    outline: none;
+}
+
+.form-label {
+    color: #495057;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* ── Navigation/Header Spacing ─────────────────────────────────── */
+
+.navigation-header {
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.hero-home .navigation-header {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: 1rem;
+}
+
+/* ── Page Title Styling ────────────────────────────────────────── */
+
+.page-title {
+    color: #212529;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem 0;
+}
+
+/* ── Badge Styling ─────────────────────────────────────────────── */
+
+.badge {
+    border-radius: 12px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* ── Responsive Adjustments ────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .search-container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+    }
+
+    .navigation-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .confirm-grid {
+        gap: 0.75rem;
+    }
+
+    .confirm-card {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .search-container {
+        padding: 1rem;
+    }
+
+    .btn-sm {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .navigation-header {
+        margin-bottom: 1rem;
+    }
+
+    .confirm-card {
+        padding: 0.875rem;
+    }
+
+    h1 {
+        font-size: 1.25rem;
+    }
+}
+
+/* ── General Link Styling ──────────────────────────────────────── */
+
+a {
+    color: #265284;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #1d446d;
+    text-decoration: underline;
+}
+
+a.btn {
+    text-decoration: none;
+}
+
+a.btn:hover {
+    text-decoration: none;
+}
+
+/* ── Utility Class Enhancements ────────────────────────────────── */
+
+.text-center {
+    text-align: center;
+}
+
+.text-end {
+    text-align: right;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.p-3 {
+    padding: 1rem;
+}
+
+/* ── Additional Spacing for Page Sections ──────────────────────── */
+
+.confirm-page .container,
+.confirmation-page .container,
+.search_results .container,
+.passenger-input-page,
+.payment-page {
+    padding: 0 1rem;
+}
+
+/* Ensure proper padding on larger screens */
+@media (min-width: 992px) {
+    .confirm-page .container,
+    .confirmation-page .container,
+    .search_results .container {
+        padding: 0;
+    }
+}
+
+/* ── Passenger Input Page Specific Styling ────────────────────── */
+
+.passenger-input-page {
+    background-color: #fff;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.passenger-input-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Add back link styling */
+.passenger-input-page .btn-secondary {
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ── Search Results Page Specific Styling ──────────────────────── */
+
+.search_results .container.w-75 {
+    max-width: 75%;
+    padding: 0 1rem;
+}
+
+@media (max-width: 992px) {
+    .search_results .container.w-75 {
+        max-width: 100%;
+    }
+}
+
+/* ── Home Page Layout Improvements ─────────────────────────────── */
+
+.hero-home {
+    background-color: #fff;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.hero-banner {
+    margin-top: -20px;
+}
+
+/* ── Confirmation Page Centered Layout ────────────────────────── */
+
+.confirmation-page .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    padding: 3rem 1rem;
+}
+
+.confirmation-page .card {
+    max-width: 500px;
+    width: 100%;
+}
+
+.confirmation-page .card h2 {
+    color: #265284;
+    margin-top: 1rem;
+}
+
+/* ── Better Form Field Layout ──────────────────────────────────── */
+
+.confirm-card .form-control,
+.confirm-card select {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.confirm-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+/* ── Header Image Responsiveness ────────────────────────────────── */
+
+.navigation-header img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+@media (max-width: 576px) {
+    .navigation-header {
+        margin-left: -1rem;
+        margin-right: -1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .navigation-header img {
+        border-radius: 0;
+    }
+}
+
+/* ── Overall Consistency Adjustments ───────────────────────────── */
+
+body {
+    background-color: #f4f4f4;
+}
+
+.hero-home,
+.confirm-page,
+.confirmation-page,
+.payment-page,
+.passenger-input-page,
+.search_results {
+    background-color: #fff;
+}
+
+/* Ensure pages transition smoothly */
+.confirm-page,
+.confirmation-page,
+.payment-page {
+    padding-bottom: 2rem;
 }

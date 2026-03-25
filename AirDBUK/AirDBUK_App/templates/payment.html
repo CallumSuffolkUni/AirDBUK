@@ -4,18 +4,19 @@
 {% block content %}
 {% load static %}
 {% if user.is_authenticated %}
-<div class="container">
 
+<div class="payment-page">
     <div class="container">
         <div class="navigation-header">
             <img class="card-img-top" src="{% static 'images/Navigation-Header-4.webp' %}">
         </div>
     </div>
 
-    <h1 class="mt-3">Review and Pay</h1>
+    <div class="container">
+        <h1 class="mt-3">Review and Pay</h1>
 
-    <div class="confirm-grid">
-        <div class="confirm-left">
+        <div class="confirm-grid">
+            <div class="confirm-left">
 
 
             {% for passenger in passenger_data %}
@@ -60,62 +61,59 @@
 
         </div>
         <div class="confirm-right">
-            <div class="confirm-right">
-
-                <div class="card confirm-card">
-                    <div class="section-meta">
-                        <span class="card-label">Outbound flight</span>
-                        <span class="badge badge-success">{{ flight.Status }}</span>
+            <div class="card confirm-card">
+                <div class="section-meta">
+                    <span class="card-label">Outbound flight</span>
+                    <span class="badge badge-success">{{ flight.Status }}</span>
+                </div>
+                <div class="route-row">
+                    <div class="airport-block">
+                        <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                        <div class="city">{{ flight.Departure_Airport.City }}</div>
+                        <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
                     </div>
-                    <div class="route-row">
-                        <div class="airport-block">
-                            <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
-                            <div class="city">{{ flight.Departure_Airport.City }}</div>
-                            <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                    <div class="track">
+                        <div class="track-line">
+                            <div class="track-dot"></div>
+                            <div class="track-seg"></div>
+                            <span><i class="ri-flight-takeoff-line"></i></span>
+                            <div class="track-seg"></div>
+                            <div class="track-dot"></div>
                         </div>
-                        <div class="track">
-                            <div class="track-line">
-                                <div class="track-dot"></div>
-                                <div class="track-seg"></div>
-                                <span><i class="ri-flight-takeoff-line"></i></span>
-                                <div class="track-seg"></div>
-                                <div class="track-dot"></div>
-                            </div>
-                            <span class="duration">{{ flight.duration }}</span>
-                        </div>
-                        <div class="airport-block text-end">
-                            <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
-                            <div class="city">{{ flight.Arrival_Airport.City }}</div>
-                            <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
-                        </div>
+                        <span class="duration">{{ flight.duration }}</span>
                     </div>
-                    <p class="flight-meta">
-                        Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
-                    </p>
-                    <hr>
-                    <div class="detail-row">
-                        <span>Class</span>
-                        <span class="">{{ flight.Travel_Class }}</span>
+                    <div class="airport-block text-end">
+                        <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
+                        <div class="city">{{ flight.Arrival_Airport.City }}</div>
+                        <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
                     </div>
                 </div>
-
-                <div class="card confirm-card mb-3">
-                    <div class="section-meta">
-                        <span class="card-label">Your Account</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Name</span>
-                        <span>{{ user.first_name }} {{ user.last_name }}</span>  <!-- first and last name -->
-                    </div>
-                    <div class="detail-row">
-                        <span>Email</span>
-                        <span>{{ user.email }}</span>
-                    </div>
+                <p class="flight-meta">
+                    Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
+                </p>
+                <hr>
+                <div class="detail-row">
+                    <span>Class</span>
+                    <span class="">{{ flight.Travel_Class }}</span>
                 </div>
+            </div>
 
+            <div class="card confirm-card mb-3">
+                <div class="section-meta">
+                    <span class="card-label">Your Account</span>
+                </div>
+                <div class="detail-row">
+                    <span>Name</span>
+                    <span>{{ user.first_name }} {{ user.last_name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Email</span>
+                    <span>{{ user.email }}</span>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endif %}
 {% endblock %}

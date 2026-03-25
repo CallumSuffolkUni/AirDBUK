@@ -13,50 +13,50 @@
         </div>
     </div>
 
-    <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to confirm flight</a>
+    <div class="container">
+        <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to confirm flight</a>
 
-    <h6 class="display-6 page-title mt-3">Passenger Details</h6>
+        <h6 class="display-6 page-title mt-3">Passenger Details</h6>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ formset.management_form }}
+        <form method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
 
-        <div class="confirm-grid">
-
-            <!-- Left: Passenger Details -->
-            <div class="confirm-left">
-                {% for form in formset %}
-                <div class="card confirm-card mb-3">
-                    <div class="section-meta">
-                        <span class="card-label">Passenger {{ forloop.counter }}</span>
-                    </div>
-                    {{ form.as_p }}
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Right: summary -->
-            <div class="confirm-right">
-                <div class="card confirm-card">
-                    <div class="section-meta">
-                        <span class="card-label">Outbound flight</span>
-                        <span class="badge badge-success">{{ flight.Status }}</span>
-                    </div>
-                    <div class="route-row">
-                        <div class="airport-block">
-                            <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
-                            <div class="city">{{ flight.Departure_Airport.City }}</div>
-                            <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+            <div class="confirm-grid">
+                <!-- Left: Passenger Details -->
+                <div class="confirm-left">
+                    {% for form in formset %}
+                    <div class="card confirm-card mb-3">
+                        <div class="section-meta">
+                            <span class="card-label">Passenger {{ forloop.counter }}</span>
                         </div>
-                        <div class="track">
-                            <div class="track-line">
-                                <div class="track-dot"></div>
-                                <div class="track-seg"></div>
-                                <span><i class="ri-flight-takeoff-line"></i></span>
-                                <div class="track-seg"></div>
-                                <div class="track-dot"></div>
+                        {{ form.as_p }}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Right: summary -->
+                <div class="confirm-right">
+                    <div class="card confirm-card">
+                        <div class="section-meta">
+                            <span class="card-label">Outbound flight</span>
+                            <span class="badge badge-success">{{ flight.Status }}</span>
+                        </div>
+                        <div class="route-row">
+                            <div class="airport-block">
+                                <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                                <div class="city">{{ flight.Departure_Airport.City }}</div>
+                                <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
                             </div>
-                            <span class="duration">{{ flight.duration }}</span>
+                            <div class="track">
+                                <div class="track-line">
+                                    <div class="track-dot"></div>
+                                    <div class="track-seg"></div>
+                                    <span><i class="ri-flight-takeoff-line"></i></span>
+                                    <div class="track-seg"></div>
+                                    <div class="track-dot"></div>
+                                </div>
+                                <span class="duration">{{ flight.duration }}</span>
                         </div>
                         <div class="airport-block text-end">
                             <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
@@ -79,118 +79,128 @@
                 </div>
             </div>
 
-        </div>
+            </div>
 
-        <div class="passenger-button mt-3">
-            <button class="btn btn-primary" type="submit">Confirm Passengers</button>
-        </div>
+            <div class="passenger-button mt-3">
+                <button class="btn btn-primary" type="submit">Confirm Passengers</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 </div>
 
 {% else %}
 
 <div class="passenger-input-page">
-    <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to confirm flight</a>
+    <div class="container">
+        <div class="navigation-header">
+            <img class="card-img-top" src="{% static 'images/Navigation-Header-3.webp' %}">
+        </div>
+    </div>
 
-    <h6 class="display-6 page-title mt-3">Passenger Details</h6>
+    <div class="container">
+        <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to confirm flight</a>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ formset.management_form }}
-        <input type="hidden" name="flight_id" value="{{ flight.id }}">
-        <input type="hidden" name="passengers" value="{{ passengers }}">
-        <input type="hidden" name="action" id="action-field" value="login">
+        <h6 class="display-6 page-title mt-3">Passenger Details</h6>
 
-        <div class="confirm-grid">
+        <form method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <input type="hidden" name="flight_id" value="{{ flight.id }}">
+            <input type="hidden" name="passengers" value="{{ passengers }}">
+            <input type="hidden" name="action" id="action-field" value="login">
 
-            <!-- Left: Passenger Details + Auth -->
-            <div class="confirm-left">
+            <div class="confirm-grid">
 
-                {% for form in formset %}
-                <div class="card confirm-card mb-3">
-                    <div class="section-meta">
-                        <span class="card-label">Passenger {{ forloop.counter }}</span>
-                    </div>
-                    {{ form.as_p }}
-                </div>
-                {% endfor %}
+                <!-- Left: Passenger Details + Auth -->
+                <div class="confirm-left">
 
-                <!-- Toggle buttons -->
-                <div class="mb-3">
-                    <button type="button" class="btn btn-outline-primary me-2" onclick="showSection('login')">Already have an account</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="showSection('register')">Create an account</button>
-                </div>
-
-                <!-- Login section -->
-                <div id="login-section" class="container shadow p-4 mb-3 bg-body rounded">
-                    <h6 class="mb-3">Sign In</h6>
-                    {{ login_form.as_p }}
-                </div>
-
-                <!-- Register section -->
-                <div id="register-section" class="container shadow p-4 mb-3 bg-body rounded" style="display:none;">
-                    <h6 class="mb-3">Create an Account</h6>
-                    {{ form_b.as_p }}
-                </div>
-
-            </div>
-
-            <!-- Right: summary -->
-            <div class="confirm-right">
-                <div class="card confirm-card">
-                    <div class="section-meta">
-                        <span class="card-label">Outbound flight</span>
-                        <span class="badge badge-success">{{ flight.Status }}</span>
-                    </div>
-                    <div class="route-row">
-                        <div class="airport-block">
-                            <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
-                            <div class="city">{{ flight.Departure_Airport.City }}</div>
-                            <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                    {% for form in formset %}
+                    <div class="card confirm-card mb-3">
+                        <div class="section-meta">
+                            <span class="card-label">Passenger {{ forloop.counter }}</span>
                         </div>
-                        <div class="track">
-                            <div class="track-line">
-                                <div class="track-dot"></div>
-                                <div class="track-seg"></div>
-                                <span><i class="ri-flight-takeoff-line"></i></span>
-                                <div class="track-seg"></div>
-                                <div class="track-dot"></div>
+                        {{ form.as_p }}
+                    </div>
+                    {% endfor %}
+
+                    <!-- Toggle buttons -->
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-outline-primary me-2" onclick="showSection('login')">Already have an account</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="showSection('register')">Create an account</button>
+                    </div>
+
+                    <!-- Login section -->
+                    <div id="login-section" class="container shadow p-4 mb-3 bg-body rounded">
+                        <h6 class="mb-3">Sign In</h6>
+                        {{ login_form.as_p }}
+                    </div>
+
+                    <!-- Register section -->
+                    <div id="register-section" class="container shadow p-4 mb-3 bg-body rounded" style="display:none;">
+                        <h6 class="mb-3">Create an Account</h6>
+                        {{ form_b.as_p }}
+                    </div>
+
+                </div>
+
+                <!-- Right: summary -->
+                <div class="confirm-right">
+                    <div class="card confirm-card">
+                        <div class="section-meta">
+                            <span class="card-label">Outbound flight</span>
+                            <span class="badge badge-success">{{ flight.Status }}</span>
+                        </div>
+                        <div class="route-row">
+                            <div class="airport-block">
+                                <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                                <div class="city">{{ flight.Departure_Airport.City }}</div>
+                                <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
                             </div>
-                            <span class="duration">{{ flight.duration }}</span>
+                            <div class="track">
+                                <div class="track-line">
+                                    <div class="track-dot"></div>
+                                    <div class="track-seg"></div>
+                                    <span><i class="ri-flight-takeoff-line"></i></span>
+                                    <div class="track-seg"></div>
+                                    <div class="track-dot"></div>
+                                </div>
+                                <span class="duration">{{ flight.duration }}</span>
+                            </div>
+                            <div class="airport-block text-end">
+                                <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
+                                <div class="city">{{ flight.Arrival_Airport.City }}</div>
+                                <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
+                            </div>
                         </div>
-                        <div class="airport-block text-end">
-                            <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
-                            <div class="city">{{ flight.Arrival_Airport.City }}</div>
-                            <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
+                        <p class="flight-meta">
+                            Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
+                        </p>
+                        <hr>
+                        <div class="detail-row">
+                            <span>Class</span>
+                            <span class="">{{ flight.Travel_Class }}</span>
                         </div>
-                    </div>
-                    <p class="flight-meta">
-                        Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
-                    </p>
-                    <hr>
-                    <div class="detail-row">
-                        <span>Class</span>
-                        <span class="">{{ flight.Travel_Class }}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Passengers</span>
-                        <span>{{ passengers }}</span>
+                        <div class="detail-row">
+                            <span>Passengers</span>
+                            <span>{{ passengers }}</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
-
-        <div class="passenger-button mt-3">
-            <div id="login-section-btn" style="display:block;">
-                <button class="btn btn-primary" type="submit" name="action" value="login">Sign In & Continue</button>
+            <div class="passenger-button mt-3">
+                <div id="login-section-btn" style="display:block;">
+                    <button class="btn btn-primary" type="submit" name="action" value="login">Sign In & Continue</button>
+                </div>
+                <div id="register-section-btn" style="display:none;">
+                    <button class="btn btn-primary" type="submit" name="action" value="register">Register & Continue</button>
+                </div>
             </div>
-            <div id="register-section-btn" style="display:none;">
-                <button class="btn btn-primary" type="submit" name="action" value="register">Register & Continue</button>
-            </div>
         </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 {% endif %}
