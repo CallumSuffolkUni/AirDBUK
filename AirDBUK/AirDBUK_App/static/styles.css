@@ -775,6 +775,65 @@ textarea:focus {
     margin-top: 1rem;
 }
 
+/* ── Booking Progress Stepper ───────────────────────────────────── */
+
+.booking-steps {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+}
+
+.step {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #286090;
+    background: rgba(38, 82, 132, 0.08);
+    border: 1px solid rgba(38, 82, 132, 0.15);
+    border-radius: 32px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.95rem;
+}
+
+.step span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #bdd7ef;
+    color: #0f3f7c;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.step.step-active,
+.step.completed {
+    background: #1b5d9e;
+    color: #fff;
+    border-color: #1b5d9e;
+}
+
+.step.step-active span,
+.step.completed span {
+    background: #fff;
+    color: #1b5d9e;
+}
+
+.step.completed:hover,
+.step.step-active:hover {
+    transform: scale(1.02);
+}
+
+.step:not(.step-active):not(.completed):hover {
+    background: rgba(38, 82, 132, 0.16);
+}
+
 .hero-home .navigation-header {
     margin-bottom: 0;
     margin-top: 0;

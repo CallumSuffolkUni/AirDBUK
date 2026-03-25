@@ -4,7 +4,13 @@
 {% block content %}
 {% load static %}
 <div class="confirm-page">
-    <div clas="container">
+    <div class="container">
+        <div class="booking-steps">
+            <div class="step completed"><span>1</span> Search Flights</div>
+            <div class="step step-active"><span>2</span> Flight Details</div>
+            <div class="step"><span>3</span> Passengers</div>
+            <div class="step"><span>4</span> Review and Pay</div>
+        </div>
         <div class="container">
             <div class="navigation-header">
                 <img class="card-img-top" src="{% static 'images/Navigation-Header-2.webp' %}">
