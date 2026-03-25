@@ -2,10 +2,17 @@
 {% block title %}Passenger Input - AirDBUK{% endblock %}
 
 {% block content %}
-
+{% load static %}
 {% if user.is_authenticated %}
 
 <div class="passenger-input-page">
+
+    <div class="container">
+        <div class="navigation-header">
+            <img class="card-img-top" src="{% static 'images/Navigation-Header-3.webp' %}">
+        </div>
+    </div>
+
     <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to confirm flight</a>
 
     <h6 class="display-6 page-title mt-3">Passenger Details</h6>

@@ -3,8 +3,9 @@
 {% block title %}AirDBUK{% endblock %}
 
 {% block content %}
+{% load static %}
 <!-- Search Container -->
-<div class="hero-banner">
+<div class="hero-banner" id="search-form">
     <div class="hero-overlay">
         <div class="container">
             <div class="hero-content">
@@ -12,7 +13,7 @@
                 <p class="hero-subtitle">Travel the UK! Find and book your perfect flight</p>
 
                 <div class="search-container">
-                    <form method="get" action="{% url 'search_results' %}" id="search-form">
+                    <form method="get" action="{% url 'search_results' %}" id="">
                         <div class="row g-2">
                             <div class="col-6">
                                 {{ form.departure_airport.label_tag }}
@@ -51,7 +52,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
             <div class="card h-100">
-                <a href="#search-form" onclick="fillSearch('London, LHR, (Heathrow Airport)', 'Manchester, MAN, (Manchester Airport)', 'Economy', 1)"><img src="static/images/Airport_1.webp" class="card-img-top" alt="Airport_1" ></a>
+                <a href="#search-form" onclick="fillSearch('London, LHR, (Heathrow Airport)', 'Manchester, MAN, (Manchester Airport)', 'Economy', 1)"><img src="{% static 'images/Airport_1.webp' %}" class="card-img-top" alt="Airport_1" ></a>
                 <div class="card-body">
                     <h5 class="card-title">Heathrow to Manchester!</h5>
                     <p class="card-text">Go check out the wonderful music, nightlife and festivals in Manchester! With iconic venues like the AO Arena or the 02 Apollo, you are certain to have a great time!</p>
@@ -63,7 +64,7 @@
         </div>
         <div class="col">
             <div class="card home h-100">
-                <img src="static/images/Airport_2.webp" class="card-img-top" alt="Airport_2">
+                <img src="{% static 'images/Airport_2.webp' %}" class="card-img-top" alt="Airport_2">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -75,7 +76,7 @@
         </div>
         <div class="col">
             <div class="card h-100">
-                <img src="static/images/Airport_3.webp" class="card-img-top" alt="Airport_3">
+                <img src="{% static 'images/Airport_3.webp' %}" class="card-img-top" alt="Airport_3">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>

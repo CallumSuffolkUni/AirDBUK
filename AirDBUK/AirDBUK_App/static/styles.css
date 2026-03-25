@@ -106,6 +106,30 @@ body {
     padding: 0.5rem;
 }
 
+.navigation-header {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.navigation-header img {
+    max-width: 900px;
+    width: 100%;
+    height: auto;
+}
+
+body .search_results {
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.confirm-page {
+    background-color: #fff;
+    min-height: 100vh;
+}
+
 /* sticky top behavior and keep visual design */
 .navbar.sticky-top {
     position: sticky;
@@ -328,12 +352,6 @@ body {
 
 
 /* ── Confirm Flight Page ─────────────────────────────── */
-
-.confirm-page {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
 
 .back-link {
     font-size: 13px;

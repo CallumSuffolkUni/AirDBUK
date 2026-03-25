@@ -2,114 +2,124 @@
 {% block title %}Confirm Flight - AirDBUK{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="confirm-page">
-    
-    <h1 class="mt-3">Confirm Flight Details</h1>
+    <div clas="container">
+        <div class="container">
+            <div class="navigation-header">
+                <img class="card-img-top" src="{% static 'images/Navigation-Header-2.webp' %}">
+            </div>
+        </div>
 
-    <div class="confirm-grid">
+        <h1 class="mt-3">Confirm Flight Details</h1>
 
-        <div class="confirm-left">
+        <div class="confirm-grid">
 
-            <!-- Flight card -->
-            <div class="card confirm-card">
-                <div class="section-meta">
-                    <span class="card-label">Outbound flight</span>
-                    <span class="badge badge-success">{{ flight.Status }}</span>
-                </div>
+            <div class="confirm-left">
 
-                <div class="route-row">
-                    <div class="airport-block">
-                        <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
-                        <div class="city">{{ flight.Departure_Airport.City }}</div>
-                        <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                <!-- Flight card -->
+                <div class="card confirm-card">
+                    <div class="section-meta">
+                        <span class="card-label">Outbound flight</span>
+                        <span class="badge badge-success">{{ flight.Status }}</span>
                     </div>
-                    <div class="track">
-                        <div class="track-line">
-                            <div class="track-dot"></div>
-                            <div class="track-seg"></div>
-                            <span><i class="ri-flight-takeoff-line"></i></span>
-                            <div class="track-seg"></div>
-                            <div class="track-dot"></div>
+
+                    <div class="route-row">
+                        <div class="airport-block">
+                            <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                            <div class="city">{{ flight.Departure_Airport.City }}</div>
+                            <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
                         </div>
-                        <span class="duration">{{ flight.duration }}</span>
+                        <div class="track">
+                            <div class="track-line">
+                                <div class="track-dot"></div>
+                                <div class="track-seg"></div>
+                                <span><i class="ri-flight-takeoff-line"></i></span>
+                                <div class="track-seg"></div>
+                                <div class="track-dot"></div>
+                            </div>
+                            <span class="duration">{{ flight.duration }}</span>
+                        </div>
+                        <div class="airport-block text-end">
+                            <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
+                            <div class="city">{{ flight.Arrival_Airport.City }}</div>
+                            <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
+                        </div>
                     </div>
-                    <div class="airport-block text-end">
-                        <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
-                        <div class="city">{{ flight.Arrival_Airport.City }}</div>
-                        <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
-                    </div>
-                </div>
 
                     <p class="flight-meta">
-                    Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
+                        Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
                     </p>
 
-                <hr>
+                    <hr>
 
-                <div class="detail-row">
-                    <span>Class</span>
-                    <span class="">{{ flight.Travel_Class }}</span>
-                </div>
-                <div class="detail-row">
-                    <span>Passengers</span>
-                    <span>{{ passengers }}</span>
-                </div>
-            </div>
-
-            <!-- Price breakdown card -->
-            <div class="card confirm-card">
-                <p class="card-label">Price breakdown</p>
-                <div class="detail-row">
-                    <span>Base fare (per person)</span>
-                    <span>£{{ flight.Price }}</span>
-                </div>
-                <div class="detail-row">
-                    <span>Passengers</span>
-                    <span>× {{ passengers }}</span>
-                </div>
-                <hr>
-                <div class="detail-row fw-500">
-                    <span>Total</span>
-                    <span>£{{ total_price }}</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right: summary + confirm button -->
-        <div class="confirm-right">
-            <div class="card confirm-card">
-                <p class="card-label">Booking summary</p>
-
-                <div class="price-block text-center">
-                    <p class="muted small">Total price</p>
-                    <p class="big-price">£{{ total_price }}</p>
-                    <p class="muted small">for {{ passengers }} passenger{{ passengers|pluralize }}</p>
-                </div>
-
-                <hr>
-
-                <div class="detail-row"><span>Route</span><span>{{ flight.Departure_Airport.IATA_Code }} → {{ flight.Arrival_Airport.IATA_Code }}</span></div>
-                <div class="detail-row"><span>Date</span><span>{{ flight.Departure_Time|date:"d M Y" }}</span></div>
-                <div class="detail-row"><span>Class</span><span>{{ flight.Travel_Class }}</span></div>
-
-                <!-- POST carries flight_id + passengers to booking view -->
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="flight_id" value="{{ flight.id }}">
-                    <input type="hidden" name="passengers" value="{{ passengers }}">
-                    <div class="text-center">
-                        <a class="btn btn-primary" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&back={{ request.get_full_path|urlencode }}">
-                            Confirm Booking
-                        </a>
+                    <div class="detail-row">
+                        <span>Class</span>
+                        <span class="">{{ flight.Travel_Class }}</span>
                     </div>
-                </form>
-                <p class="muted small text-center mt-2">You won't be charged yet</p>
+                    <div class="detail-row">
+                        <span>Passengers</span>
+                        <span>{{ passengers }}</span>
+                    </div>
+                </div>
+
+                <!-- Price breakdown card -->
+                <div class="card confirm-card">
+                    <p class="card-label">Price breakdown</p>
+                    <div class="detail-row">
+                        <span>Base fare (per person)</span>
+                        <span>£{{ flight.Price }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Passengers</span>
+                        <span>× {{ passengers }}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row fw-500">
+                        <span>Total</span>
+                        <span>£{{ total_price }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: summary + confirm button -->
+            <div class="confirm-right">
+                <div class="card confirm-card">
+                    <p class="card-label">Booking summary</p>
+
+                    <div class="price-block text-center">
+                        <p class="muted small">Total price</p>
+                        <p class="big-price">£{{ total_price }}</p>
+                        <p class="muted small">for {{ passengers }} passenger{{ passengers|pluralize }}</p>
+                    </div>
+
+                    <hr>
+
+                    <div class="detail-row"><span>Route</span><span>{{ flight.Departure_Airport.IATA_Code }} → {{
+                            flight.Arrival_Airport.IATA_Code }}</span></div>
+                    <div class="detail-row"><span>Date</span><span>{{ flight.Departure_Time|date:"d M Y" }}</span></div>
+                    <div class="detail-row"><span>Class</span><span>{{ flight.Travel_Class }}</span></div>
+
+                    <!-- POST carries flight_id + passengers to booking view -->
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="flight_id" value="{{ flight.id }}">
+                        <input type="hidden" name="passengers" value="{{ passengers }}">
+                        <div class="text-center">
+                            <a class="btn btn-primary" type="button"
+                                href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&back={{ request.get_full_path|urlencode }}">
+                                Confirm Booking
+                            </a>
+                        </div>
+                    </form>
+                    <p class="muted small text-center mt-2">You won't be charged yet</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="mt-3">
-        <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to flights</a>
+        <div class="mt-3">
+            <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to flights</a>
+        </div>
     </div>
 </div>
 {% endblock %}
