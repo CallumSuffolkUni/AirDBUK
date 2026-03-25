@@ -53,14 +53,16 @@ class AddPassengerDetails(forms.Form):
         label="First Name",
         widget=forms.TextInput(attrs={
             "class": "form-input",
-            "placeholder": "Enter first name"
+            "placeholder": "Enter first name",
+            "required": True
         })
     )
     last_name = forms.CharField(
         label="Last Name",
         widget=forms.TextInput(attrs={
             "class": "form-input",
-            "placeholder": "Enter last name"
+            "placeholder": "Enter last name",
+            "required": True
         })
     )
     dob = forms.DateField(
@@ -68,7 +70,8 @@ class AddPassengerDetails(forms.Form):
         input_formats=['%Y-%m-%d'],
         widget=forms.DateInput(attrs={
             "type": "date",
-            "class": "form-input"
+            "class": "form-input",
+            "required": True
         })  
     )
  

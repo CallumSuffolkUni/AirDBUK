@@ -1,6 +1,6 @@
 /* search form styling */
 body {
-    background-color: #fff;
+    background-color: #f4f4f4;
 }
 
 .hero-banner {
@@ -14,7 +14,7 @@ body {
 }
 
 .hero-overlay {
-    background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), #fff);  
+    background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), #f4f4f4);  
     min-height: 70vh;
     width: 100%;
     display: flex;
@@ -158,9 +158,6 @@ body {
     background: #dee2e6;
     margin: 0 10px;
     border-top: 2px dashed #dee2e6;
-    border-bottom: none;
-    border-left: none;
-    border-right: none;
 }
 
 /* Navigation header */
@@ -198,12 +195,100 @@ body {
     transition: 0.3s color;
 }
 
+.dashboard {
+    background-color: #f4f4f4;
+    background-image: url("images/AirDBUK_Background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 2rem;
+    justify-content: center;
+}
+
+.login-page {
+    background-color: #f4f4f4;
+    background-image: url("images/AirDBUK_Background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+    justify-content: center;
+}
+
+.login-page .container {
+    display: flex;
+    justify-content: center;
+}
+
+.user_bookings {
+    background-color: #f4f4f4;
+    background-image: url("images/AirDBUK_Background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+    justify-content: center;
+}
+
+.user_bookings .container {
+    justify-content: center;
+}
+
+.view_bookings {
+    background-color: #f4f4f4;
+    background-image: url("images/AirDBUK_Background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+    justify-content: center;
+}
+
+.view_bookings .container {
+    justify-content: center;
+}
+
+.register-page {
+    background-color: #f4f4f4;
+    background-image: url("images/AirDBUK_Background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-page .container {
+    display: flex;
+    justify-content: center;
+}
+
 .login-button {
     background-color: #265284;
     color: #fff;
     font-size: 14px;
     padding: 8px 20px;
     border-radius: 30px;
+    border: none;
     text-decoration: none;
     transition: 0.3s background-color;
 }
@@ -253,24 +338,6 @@ button.account_button_secondary:hover {
     border: 2px solid transparent;
 }
 
-button.account_button_secondary {
-    cursor: pointer;
-    border: 2px solid #aaaaaa;
-    color: #aaaaaa;
-    font-size: 14px;
-    padding: 8px 20px;
-    border-radius: 15px;
-    text-decoration: none;
-    background-color: transparent;
-    transition: 0.3s background-color, 0.3s color;
-}
-
-button.account_button_secondary:hover {
-    background-color: #aaaaaa;
-    color: #fff;
-    border: 2px solid transparent;
-}
-
 .account_button_secondary {
     background-color: #aaaaaa;
     color: #fff;
@@ -279,10 +346,26 @@ button.account_button_secondary:hover {
     border-radius: 15px;
     text-decoration: none;
     transition: 0.3s background-color;
+    text-align: center;
 }
 
 .account_button_secondary:hover {
     background-color: #999999;
+}
+
+.delete_button {
+    background-color: #cc3333;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+    text-align: center;
+}
+
+.delete_button:hover {
+    background-color: #a62323;
 }
 
 .search_flight_button {
@@ -304,7 +387,7 @@ button.account_button_secondary:hover {
     font-size: 1.25rem;
 }
 
-.navbar-toggler:focus, btn-close:focus {
+.navbar-toggler:focus, .btn-close:focus {
     box-shadow: none;
     outline: none;
 }
@@ -313,10 +396,13 @@ button.account_button_secondary:hover {
     color: #666777;
     font-weight: 500;
     position: relative;
+    text-decoration: none;
+    border-bottom: none;
 }
 
 .nav-link:hover, .nav-link:active {
     color: #000;
+    text-decoration: none;
 }
 
 @media (min-width: 991px) {
@@ -354,6 +440,19 @@ button.account_button_secondary:hover {
 }
 
 /* Generic form input styling */
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.4rem;
+}
+
 .form-input {
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -458,11 +557,11 @@ button.account_button_secondary:hover {
     padding: 0 16px; 
 }
 
-.track-line { 
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    gap: 0; 
+.track-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
 }
 
 .track-dot { 
@@ -610,20 +709,7 @@ button.account_button_secondary:hover {
     gap: 4px;
 }
 
-.track-line {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 4px;
-}
 
-.track-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: 1.5px solid #adb5bd;
-    flex-shrink: 0;
-}
 
 .track-seg {
     flex: 1;
@@ -783,502 +869,5 @@ button.account_button_secondary:hover {
     background-color: #f8f9fa;
 }
 
-/* ═══════════════════════════════════════════════════════════════ */
-/* ENHANCED CONSISTENT STYLING FOR ALL PAGES                     */
-/* ═══════════════════════════════════════════════════════════════ */
 
-/* ── Page Container Styles ─────────────────────────────────────── */
 
-.container {
-    max-width: 1200px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: #212529;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-h1 {
-    font-size: 2rem;
-    margin: 1.5rem 0 1rem 0;
-}
-
-h2 {
-    font-size: 1.75rem;
-    margin: 1.25rem 0 0.875rem 0;
-}
-
-h6.display-6 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-p {
-    color: #495057;
-    line-height: 1.6;
-    margin-bottom: 0.75rem;
-}
-
-/* ── Card Styling ──────────────────────────────────────────────── */
-
-.card {
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-.card-footer {
-    background-color: #f8f9fa;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    padding: 0.75rem 1.5rem;
-}
-
-/* ── Button Styling ────────────────────────────────────────────── */
-
-.btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: none;
-}
-
-.btn-primary {
-    background-color: #265284;
-    color: #fff;
-}
-
-.btn-primary:hover {
-    background-color: #1d446d;
-    color: #fff;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: #fff;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-    color: #fff;
-}
-
-.btn-outline-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    color: #fff;
-}
-
-.btn-sm {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.875rem;
-}
-
-/* ── Form Input Styling ────────────────────────────────────────── */
-
-.form-control,
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
-select,
-textarea {
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    padding: 0.75rem 0.875rem;
-    font-size: 0.95rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-control:focus,
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="date"]:focus,
-select:focus,
-textarea:focus {
-    border-color: #265284;
-    box-shadow: 0 0 0 3px rgba(38, 82, 132, 0.1);
-    outline: none;
-}
-
-.form-label {
-    color: #495057;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-
-/* ── Navigation/Header Spacing ─────────────────────────────────── */
-
-.navigation-header {
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-}
-
-/* ── Booking Progress Stepper ───────────────────────────────────── */
-
-.booking-steps {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-    padding: 0 1rem;
-}
-
-.step {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    color: #286090;
-    background: rgba(38, 82, 132, 0.08);
-    border: 1px solid rgba(38, 82, 132, 0.15);
-    border-radius: 32px;
-    padding: 0.45rem 0.9rem;
-    font-size: 0.95rem;
-}
-
-.step span {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #bdd7ef;
-    color: #0f3f7c;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-
-.step.step-active,
-.step.completed {
-    background: #1b5d9e;
-    color: #fff;
-    border-color: #1b5d9e;
-}
-
-.step.step-active span,
-.step.completed span {
-    background: #fff;
-    color: #1b5d9e;
-}
-
-.step.completed:hover,
-.step.step-active:hover {
-    transform: scale(1.02);
-}
-
-.step:not(.step-active):not(.completed):hover {
-    background: rgba(38, 82, 132, 0.16);
-}
-
-.hero-home .navigation-header {
-    margin-bottom: 0;
-    margin-top: 0;
-    padding-bottom: 1rem;
-}
-
-/* ── Page Title Styling ────────────────────────────────────────── */
-
-.page-title {
-    color: #212529;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 1.5rem 0 1rem 0;
-}
-
-/* ── Badge Styling ─────────────────────────────────────────────── */
-
-.badge {
-    border-radius: 12px;
-    padding: 0.35rem 0.65rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-.badge-success {
-    background-color: #28a745;
-    color: #fff;
-}
-
-/* ── Responsive Adjustments ────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-
-    .search-container {
-        padding: 1.5rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .page-title {
-        font-size: 1.25rem;
-    }
-
-    .navigation-header {
-        margin-bottom: 1.5rem;
-    }
-
-    .confirm-grid {
-        gap: 0.75rem;
-    }
-
-    .confirm-card {
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-title {
-        font-size: 1.5rem;
-    }
-
-    .hero-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .search-container {
-        padding: 1rem;
-    }
-
-    .btn-sm {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.75rem;
-    }
-
-    .navigation-header {
-        margin-bottom: 1rem;
-    }
-
-    .confirm-card {
-        padding: 0.875rem;
-    }
-
-    h1 {
-        font-size: 1.25rem;
-    }
-}
-
-/* ── General Link Styling ──────────────────────────────────────── */
-
-a {
-    color: #265284;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-a:hover {
-    color: #1d446d;
-    text-decoration: underline;
-}
-
-a.btn {
-    text-decoration: none;
-}
-
-a.btn:hover {
-    text-decoration: none;
-}
-
-/* ── Utility Class Enhancements ────────────────────────────────── */
-
-.text-center {
-    text-align: center;
-}
-
-.text-end {
-    text-align: right;
-}
-
-.mt-3 {
-    margin-top: 1rem;
-}
-
-.mb-3 {
-    margin-bottom: 1rem;
-}
-
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
-
-.mt-5 {
-    margin-top: 3rem;
-}
-
-.p-3 {
-    padding: 1rem;
-}
-
-/* ── Additional Spacing for Page Sections ──────────────────────── */
-
-.confirm-page .container,
-.confirmation-page .container,
-.search_results .container,
-.passenger-input-page,
-.payment-page {
-    padding: 0 1rem;
-}
-
-/* Ensure proper padding on larger screens */
-@media (min-width: 992px) {
-    .confirm-page .container,
-    .confirmation-page .container,
-    .search_results .container {
-        padding: 0;
-    }
-}
-
-/* ── Passenger Input Page Specific Styling ────────────────────── */
-
-.passenger-input-page {
-    background-color: #fff;
-    min-height: 100vh;
-    padding: 2rem 0;
-}
-
-.passenger-input-page .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-/* Add back link styling */
-.passenger-input-page .btn-secondary {
-    margin-bottom: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* ── Search Results Page Specific Styling ──────────────────────── */
-
-.search_results .container.w-75 {
-    max-width: 75%;
-    padding: 0 1rem;
-}
-
-@media (max-width: 992px) {
-    .search_results .container.w-75 {
-        max-width: 100%;
-    }
-}
-
-/* ── Home Page Layout Improvements ─────────────────────────────── */
-
-.hero-home {
-    background-color: #fff;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
-.hero-banner {
-    margin-top: -20px;
-}
-
-/* ── Confirmation Page Centered Layout ────────────────────────── */
-
-.confirmation-page .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 200px);
-    padding: 3rem 1rem;
-}
-
-.confirmation-page .card {
-    max-width: 500px;
-    width: 100%;
-}
-
-.confirmation-page .card h2 {
-    color: #265284;
-    margin-top: 1rem;
-}
-
-/* ── Better Form Field Layout ──────────────────────────────────── */
-
-.confirm-card .form-control,
-.confirm-card select {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.confirm-card label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #495057;
-    font-size: 0.9rem;
-}
-
-/* ── Header Image Responsiveness ────────────────────────────────── */
-
-.navigation-header img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-@media (max-width: 576px) {
-    .navigation-header {
-        margin-left: -1rem;
-        margin-right: -1rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .navigation-header img {
-        border-radius: 0;
-    }
-}
-
-/* ── Overall Consistency Adjustments ───────────────────────────── */
-
-body {
-    background-color: #f4f4f4;
-}
-
-.hero-home,
-.confirm-page,
-.confirmation-page,
-.payment-page,
-.passenger-input-page,
-.search_results {
-    background-color: #fff;
-}
-
-/* Ensure pages transition smoothly */
-.confirm-page,
-.confirmation-page,
-.payment-page {
-    padding-bottom: 2rem;
-}

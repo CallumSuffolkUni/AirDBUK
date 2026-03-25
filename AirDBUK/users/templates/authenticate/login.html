@@ -3,18 +3,20 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container shadow p-4 mb-5 bg-body rounded">
+<div class="login-page">
+    <div class="container">
+        <div class="shadow p-4 mb-5 bg-body rounded w-50">
+            <h1>Login</h1>
+            
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="login-button">Submit</button>
+            </form>
 
-    <h1>Login</h1>
-    
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <p class="text-center">Not a registered user? Register <a href="{% url 'register_user' %}">here!</a></p>
-</div> 
-
+            <p class="text-center">Not a registered user? Register <a href="{% url 'register_user' %}">here!</a></p>
+        </div>
+    </div> 
+</div>
 
 {% endblock %}
