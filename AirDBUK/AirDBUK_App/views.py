@@ -7,7 +7,7 @@ from django.db.models import Q
 from .forms import FlightSearchForm, AddPassengerDetails
 from .models import *
 from django.forms import formset_factory
-from users.forms import RegisterUserForm
+from users.forms import RegisterUserForm, LoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -206,7 +206,7 @@ def passenger_input(request):
     PassengerFormSet = formset_factory(AddPassengerDetails, extra=passengers)
 
     formset = PassengerFormSet(prefix="passengers")
-    login_form = AuthenticationForm()
+    form_a = LoginForm(prefix="login")
     form_b = RegisterUserForm(prefix="register")
 
     if request.method == "POST":
@@ -230,9 +230,9 @@ def passenger_input(request):
 
         # --- Not logged in: chose to sign in ---
         elif action == "login":
-            login_form = AuthenticationForm(request, data=request.POST)
-            if login_form.is_valid() and formset.is_valid():
-                user = login_form.get_user()
+            form_a = LoginForm(request, data=request.POST)
+            if form_a.is_valid() and formset.is_valid():
+                user = form_a.get_user()
                 login(request, user)
                 passenger_data = []
                 for form in formset:
@@ -275,7 +275,7 @@ def passenger_input(request):
         'total_price': flight.Price * passengers,
         'formset': formset,
         'form_b': form_b,
-        'login_form': login_form,
+        'form_a': form_a,
     })
 
 def payment(request):

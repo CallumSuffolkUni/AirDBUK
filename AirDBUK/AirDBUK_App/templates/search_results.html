@@ -5,19 +5,34 @@
 {% load static %}
 {% if form.is_bound %}
 <div class="search_results">
+
   <div class="container">
-    <div class="booking-steps">
-      <div class="step step-active"><span>1</span> Search Flights</div>
-      <div class="step"><span>2</span> Flight Details</div>
-      <div class="step"><span>3</span> Passengers</div>
-      <div class="step"><span>4</span> Review and Pay</div>
-    </div>
-    <div class="navigation-header">
-      <img class="card-img-top" src="{% static 'images/Navigation-Header-1.webp' %}">
+    <div class="progress-bar-nav">
+      <div class="progress-step active">
+        <div class="step-circle">1</div>
+        <span class="step-label">Search Flights</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="step-circle">2</div>
+        <span class="step-label">Flight Details</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="step-circle">3</div>
+        <span class="step-label">Passengers</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="step-circle">4</div>
+        <span class="step-label">Review and Pay</span>
+      </div>
     </div>
   </div>
 
-  <div class="container w-75">
+  <div class="container w-100">
+
+    <h1 class="mt-3">Search Flights</h1>
     <div class="row">
       <div class="col-lg-4 mb-4">
         <div class="calendar-card p-3">
@@ -60,10 +75,7 @@
                 {% if day in available_days %}
                 <td class="calendar-day available {% if day == selected_day %}selected{% endif %}">
                   <a class="calendar-link"
-                    href="{% url 'search_results' %}?departure_date={{ calendar_year }}-{{ calendar_month|stringformat:"
-                    02d" }}-{{ day|stringformat:"02d" }}&departure_airport={{ base_query.departure_airport|urlencode
-                    }}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{
-                    base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}">
+                    href="{% url 'search_results' %}?departure_date={{ calendar_year }}-{{ calendar_month|stringformat:'02d' }}-{{ day|stringformat:'02d' }}&departure_airport={{ base_query.departure_airport|urlencode}}&arrival_airport={{ base_query.arrival_airport|urlencode }}&travel_class={{base_query.travel_class|urlencode }}&passengers={{ base_query.passengers|urlencode }}">
                     {{ day }}
                   </a>
                 </td>
@@ -88,9 +100,8 @@
         {% for flight in flights %}
         <div class="flight-card">
           <div class="flight-card-header">
-            <span class="fw-500 text-dark" style="font-size:13px; letter-spacing:0.04em;">{{ flight.Flight_Number
-              }}</span>
-            <span class="text-muted" style="font-size:13px;">{{ flight.Departure_Time|date:"D d M Y" }}</span>
+            <span class="fw-500" style="font-size:13px; letter-spacing:0.04em;">{{ flight.Flight_Number }}</span>
+            <span class="" style="font-size:13px;">{{ flight.Departure_Time|date:"D d M Y" }}</span>
           </div>
 
           <div class="flight-card-body">
@@ -120,14 +131,14 @@
             <div class="card-divider"></div>
 
             <div class="right-panel">
-              <div class="card text-center">
+              <div class="card w-50 text-center h-75">
                 <div class="card-header">
                   {{ flight.Travel_Class }}
                 </div>
                 <div class="card-body">
                   <p class="card-text">From</p>
                   <h5 class="card-title">£{{ flight.Price }}</h5>
-                  <a class="btn btn-primary" type="button"
+                  <a class="search_flight_button" type="button"
                     href="{% url 'confirm_flight' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&back={{ request.get_full_path|urlencode }}">
                     Select
                   </a>

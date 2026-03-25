@@ -3,32 +3,20 @@
 
 {% block content %}
 {% load static %}
-
-<div class="confirmation-page">
+<div class="search_results">
     <div class="container">
-        <div class="booking-steps">
-            <div class="step completed"><span>1</span> Search Flights</div>
-            <div class="step completed"><span>2</span> Flight Details</div>
-            <div class="step completed"><span>3</span> Passengers</div>
-            <div class="step completed"><span>4</span> Review and Pay</div>
-        </div>
-        <div class="navigation-header">
-            <img class="card-img-top" src="{% static 'images/Navigation-Header-4.webp' %}">
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="card confirm-card mt-5 text-center">
-            <div class="section-meta">
-                <span class="card-label">Booking Confirmed</span>
+        <div class="confirmation-card">
+            <div class="card confirm-card text-center">
+                <div class="section-meta">
+                    <span class="card-label">Booking Confirmed</span>
+                </div>
+                <p style="font-size: 3rem;">✈️</p>
+                <h2>You're all booked!</h2>
+                <p>Thank you, {{ user.first_name }}. Your flight has been successfully booked.</p>
+                <hr>
+                <a href="/" class="btn btn-primary mt-2">Back to Home</a>
             </div>
-            <p style="font-size: 3rem;">✈️</p>
-            <h2>You're all booked!</h2>
-            <p>Thank you, {{ user.first_name }}. Your flight has been successfully booked.</p>
-            <hr>
-            <a href="/" class="btn btn-primary mt-2">Back to Home</a>
         </div>
     </div>
 </div>
-
 {% endblock %}

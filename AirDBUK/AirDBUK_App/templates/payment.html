@@ -4,17 +4,28 @@
 {% block content %}
 {% load static %}
 {% if user.is_authenticated %}
-
-<div class="payment-page">
+<div class="search_results">
     <div class="container">
-        <div class="booking-steps">
-            <div class="step completed"><span>1</span> Search Flights</div>
-            <div class="step completed"><span>2</span> Flight Details</div>
-            <div class="step completed"><span>3</span> Passengers</div>
-            <div class="step step-active"><span>4</span> Review and Pay</div>
-        </div>
-        <div class="navigation-header">
-            <img class="card-img-top" src="{% static 'images/Navigation-Header-4.webp' %}">
+        <div class="progress-bar-nav">
+            <div class="progress-step active">
+                <div class="step-circle">1</div>
+                <span class="step-label">Search Flights</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step active">
+                <div class="step-circle">2</div>
+                <span class="step-label">Flight Details</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step active">
+                <div class="step-circle">3</div>
+                <span class="step-label">Passengers</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step active">
+                <div class="step-circle">4</div>
+                <span class="step-label">Review and Pay</span>
+            </div>
         </div>
     </div>
 
@@ -25,101 +36,105 @@
             <div class="confirm-left">
 
 
-            {% for passenger in passenger_data %}
-            <div class="card confirm-card mb-3">
-                <div class="section-meta">
-                    <span class="card-label">Passenger {{ forloop.counter }}</span>
-                </div>
-                <div class="detail-row">
-                    <span>Name</span>
-                    <span>{{ passenger.First_Name }} {{ passenger.Last_Name }}</span>  <!-- first and last name -->
-                </div>
-                <div class="detail-row">
-                    <span>Date of Birth</span>
-                    <span>{{ passenger.DOB }}</span>
-                </div>
-            </div>
-            {% endfor %}
-
-            <div class="card confirm-card mb-3">
-                <div class="section-meta">
-                    <span class="card-label">Price Summary</span>
-                </div>
-                <div class="detail-row">
-                    <span>Price per passenger</span>
-                    <span>£{{ flight.Price }}</span>
-                </div>
-                <div class="detail-row">
-                    <span>Passengers</span>
-                    <span>{{ passengers }}</span>
-                </div>
-                <hr>
-                <div class="detail-row">
-                    <span><strong>Total</strong></span>
-                    <span><strong>£{{ total_price }}</strong></span>
-                </div>
-            </div>
-
-            <form method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary w-100 mt-2">Book Flight</button>
-            </form>
-
-        </div>
-        <div class="confirm-right">
-            <div class="card confirm-card">
-                <div class="section-meta">
-                    <span class="card-label">Outbound flight</span>
-                    <span class="badge badge-success">{{ flight.Status }}</span>
-                </div>
-                <div class="route-row">
-                    <div class="airport-block">
-                        <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
-                        <div class="city">{{ flight.Departure_Airport.City }}</div>
-                        <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                {% for passenger in passenger_data %}
+                <div class="card confirm-card mb-3">
+                    <div class="section-meta">
+                        <span class="card-label">Passenger {{ forloop.counter }}</span>
                     </div>
-                    <div class="track">
-                        <div class="track-line">
-                            <div class="track-dot"></div>
-                            <div class="track-seg"></div>
-                            <span><i class="ri-flight-takeoff-line"></i></span>
-                            <div class="track-seg"></div>
-                            <div class="track-dot"></div>
+                    <div class="detail-row">
+                        <span>Name</span>
+                        <span>{{ passenger.First_Name }} {{ passenger.Last_Name }}</span>  <!-- first and last name -->
+                    </div>
+                    <div class="detail-row">
+                        <span>Date of Birth</span>
+                        <span>{{ passenger.DOB }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="card confirm-card mb-3">
+                    <div class="section-meta">
+                        <span class="card-label">Price Summary</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Price per passenger</span>
+                        <span>£{{ flight.Price }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Passengers</span>
+                        <span>{{ passengers }}</span>
+                    </div>
+                    <hr>
+                    <div class="detail-row">
+                        <span><strong>Total</strong></span>
+                        <span><strong>£{{ total_price }}</strong></span>
+                    </div>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="search_flight_button w-100 mt-2">Book Flight</button>
+                </form>
+
+            </div>
+            <div class="confirm-right">
+                <div class="confirm-right">
+
+                    <div class="card confirm-card">
+                        <div class="section-meta">
+                            <span class="card-label">Outbound flight</span>
+                            <span class="badge badge-success">{{ flight.Status }}</span>
                         </div>
-                        <span class="duration">{{ flight.duration }}</span>
+                        <div class="route-row">
+                            <div class="airport-block">
+                                <div class="iata">{{ flight.Departure_Airport.IATA_Code }}</div>
+                                <div class="city">{{ flight.Departure_Airport.City }}</div>
+                                <div class="flight-time">{{ flight.Departure_Time|date:"H:i" }}</div>
+                            </div>
+                            <div class="track">
+                                <div class="track-line">
+                                    <div class="track-dot"></div>
+                                    <div class="track-seg"></div>
+                                    <span><i class="ri-flight-takeoff-line"></i></span>
+                                    <div class="track-seg"></div>
+                                    <div class="track-dot"></div>
+                                </div>
+                                <span class="duration">{{ flight.duration }}</span>
+                            </div>
+                            <div class="airport-block text-end">
+                                <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
+                                <div class="city">{{ flight.Arrival_Airport.City }}</div>
+                                <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
+                            </div>
+                        </div>
+                        <p class="flight-meta">
+                            Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
+                        </p>
+                        <hr>
+                        <div class="detail-row">
+                            <span>Class</span>
+                            <span class="">{{ flight.Travel_Class }}</span>
+                        </div>
                     </div>
-                    <div class="airport-block text-end">
-                        <div class="iata">{{ flight.Arrival_Airport.IATA_Code }}</div>
-                        <div class="city">{{ flight.Arrival_Airport.City }}</div>
-                        <div class="flight-time">{{ flight.Arrival_Time|date:"H:i" }}</div>
-                    </div>
-                </div>
-                <p class="flight-meta">
-                    Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
-                </p>
-                <hr>
-                <div class="detail-row">
-                    <span>Class</span>
-                    <span class="">{{ flight.Travel_Class }}</span>
-                </div>
-            </div>
 
-            <div class="card confirm-card mb-3">
-                <div class="section-meta">
-                    <span class="card-label">Your Account</span>
-                </div>
-                <div class="detail-row">
-                    <span>Name</span>
-                    <span>{{ user.first_name }} {{ user.last_name }}</span>
-                </div>
-                <div class="detail-row">
-                    <span>Email</span>
-                    <span>{{ user.email }}</span>
+                    <div class="card confirm-card mb-3">
+                        <div class="section-meta">
+                            <span class="card-label">Your Account</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Name</span>
+                            <span>{{ user.first_name }} {{ user.last_name }}</span>  <!-- first and last name -->
+                        </div>
+                        <div class="detail-row">
+                            <span>Email</span>
+                            <span>{{ user.email }}</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 {% endif %}
 {% endblock %}

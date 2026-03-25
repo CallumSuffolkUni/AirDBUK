@@ -3,20 +3,31 @@
 
 {% block content %}
 {% load static %}
-<div class="confirm-page">
-    <div class="container">
-        <div class="booking-steps">
-            <div class="step completed"><span>1</span> Search Flights</div>
-            <div class="step step-active"><span>2</span> Flight Details</div>
-            <div class="step"><span>3</span> Passengers</div>
-            <div class="step"><span>4</span> Review and Pay</div>
-        </div>
-        <div class="container">
-            <div class="navigation-header">
-                <img class="card-img-top" src="{% static 'images/Navigation-Header-2.webp' %}">
-            </div>
-        </div>
+<div class="search_results">
 
+    <div class="progress-bar-nav">
+        <div class="progress-step active">
+            <div class="step-circle">1</div>
+            <span class="step-label">Search Flights</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step active">
+            <div class="step-circle">2</div>
+            <span class="step-label">Flight Details</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step">
+            <div class="step-circle">3</div>
+            <span class="step-label">Passengers</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step">
+            <div class="step-circle">4</div>
+            <span class="step-label">Review and Pay</span>
+        </div>
+    </div>
+    
+    <div class="container w-75">
         <h1 class="mt-3">Confirm Flight Details</h1>
 
         <div class="confirm-grid">
@@ -53,9 +64,9 @@
                         </div>
                     </div>
 
-                    <p class="flight-meta">
+                        <p class="flight-meta">
                         Flight {{ flight.Flight_Number }} &nbsp;·&nbsp; {{ flight.Departure_Time|date:"D d M Y" }}
-                    </p>
+                        </p>
 
                     <hr>
 
@@ -101,8 +112,7 @@
 
                     <hr>
 
-                    <div class="detail-row"><span>Route</span><span>{{ flight.Departure_Airport.IATA_Code }} → {{
-                            flight.Arrival_Airport.IATA_Code }}</span></div>
+                    <div class="detail-row"><span>Route</span><span>{{ flight.Departure_Airport.IATA_Code }} → {{ flight.Arrival_Airport.IATA_Code }}</span></div>
                     <div class="detail-row"><span>Date</span><span>{{ flight.Departure_Time|date:"d M Y" }}</span></div>
                     <div class="detail-row"><span>Class</span><span>{{ flight.Travel_Class }}</span></div>
 
@@ -112,8 +122,7 @@
                         <input type="hidden" name="flight_id" value="{{ flight.id }}">
                         <input type="hidden" name="passengers" value="{{ passengers }}">
                         <div class="text-center">
-                            <a class="btn btn-primary" type="button"
-                                href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&back={{ request.get_full_path|urlencode }}">
+                            <a class="search_flight_button" type="button" href="{% url 'passenger_input' %}?flight_id={{ flight.id }}&passengers={{ form.passengers.value }}&back={{ request.get_full_path|urlencode }}">
                                 Confirm Booking
                             </a>
                         </div>
@@ -124,7 +133,7 @@
         </div>
 
         <div class="mt-3">
-            <a class="btn btn-secondary" href="{{ request.GET.back }}">&#8592; Return to flights</a>
+            <a class="account_button_secondary" href="{{ request.GET.back }}">&#8592; Return to flights</a>
         </div>
     </div>
 </div>
