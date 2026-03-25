@@ -1,6 +1,6 @@
 /* search form styling */
 body {
-    background: #f4f4f4;
+    background-color: #fff;
 }
 
 .hero-banner {
@@ -14,7 +14,7 @@ body {
 }
 
 .hero-overlay {
-    background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), #f4f4f4);  
+    background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), #fff);  
     min-height: 70vh;
     width: 100%;
     display: flex;
@@ -106,9 +106,85 @@ body {
     padding: 0.5rem;
 }
 
+/* Progress Bar */
+.progress-bar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 0 1.5rem 0;
+    gap: 0;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #adb5bd;
+}
+
+.progress-step.active {
+    color: #265284;
+}
+
+.step-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #adb5bd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff;
+    flex-shrink: 0;
+}
+
+.progress-step.active .step-circle {
+    border-color: #265284;
+    background: #265284;
+    color: #fff;
+}
+
+.step-label {
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.progress-line {
+    flex: 0 0 50px;
+    height: 1px;
+    background: #dee2e6;
+    margin: 0 10px;
+    border-top: 2px dashed #dee2e6;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+/* Navigation header */
+.navigation-header {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0 1rem 0;
+    background-color: #fff;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 1.5rem;
+}
+
+.navigation-header img {
+    max-width: 650px;
+    width: 100%;
+    height: auto;
+}
+
+
+
 /* sticky top behavior and keep visual design */
 .navbar.sticky-top {
-    position: sticky;
+    position: sticky; 
     top: 0;
     z-index: 1030;
     margin: 0;
@@ -133,6 +209,93 @@ body {
 }
 
 .login-button:hover {
+    background-color: #1d446d;
+}
+
+button.search_flight_button {
+    border: none;
+    cursor: pointer;
+}
+
+button.account_button {
+    cursor: pointer;
+    border: 2px solid #265284;
+    color: #265284;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    background-color: transparent;
+    transition: 0.3s background-color, 0.3s color;
+}
+
+button.account_button:hover {
+    background-color: #265284;
+    color: #fff;
+    border: 2px solid transparent;
+}
+
+button.account_button_secondary {
+    cursor: pointer;
+    border: 2px solid #aaaaaa;
+    color: #aaaaaa;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    background-color: transparent;
+    transition: 0.3s background-color, 0.3s color;
+}
+
+button.account_button_secondary:hover {
+    background-color: #aaaaaa;
+    color: #fff;
+    border: 2px solid transparent;
+}
+
+button.account_button_secondary {
+    cursor: pointer;
+    border: 2px solid #aaaaaa;
+    color: #aaaaaa;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    background-color: transparent;
+    transition: 0.3s background-color, 0.3s color;
+}
+
+button.account_button_secondary:hover {
+    background-color: #aaaaaa;
+    color: #fff;
+    border: 2px solid transparent;
+}
+
+.account_button_secondary {
+    background-color: #aaaaaa;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+}
+
+.account_button_secondary:hover {
+    background-color: #999999;
+}
+
+.search_flight_button {
+    background-color: #265284;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+}
+
+.search_flight_button:hover {
     background-color: #1d446d;
 }
 
@@ -180,6 +343,15 @@ body {
     }
 }
 
+.search_results {
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+}
+
+.confirmation-card {
+    padding: 20px 0 0 0;
+}
 
 /* Generic form input styling */
 .form-input {
@@ -235,18 +407,19 @@ body {
 }
 
 .flight-card-header { 
-    background: rgba(0,0,0,0.03); 
+    background: rgba(38, 82, 132); 
     border-bottom: 1px solid rgba(0,0,0,0.08); 
     padding: 10px 20px; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
+    color: #fff;
 }
 
 .flight-card-body { 
     padding: 20px; 
     display: flex; 
-    align-items: center; 
+    flex-direction: column;
     gap: 12px;
 
 }
@@ -258,22 +431,22 @@ body {
 }
 
 .airport-iata { 
-    font-size: 28px; 
-    font-weight: 500; 
+    font-size: 36px;     
+    font-weight: 600;     
     line-height: 1; 
 }
 
 .airport-time { 
-    font-size: 13px; 
+    font-size: 15px;
     color: #6c757d; 
     margin-top: 4px; 
 }
 
 .airport-city { 
-    font-size: 25px; 
+    font-size: 16px;
     color: #adb5bd;
-    font-weight: 500px; 
-    margin-top: 2px; 
+    font-weight: 400; 
+    margin-top: 2px;
 }
 
 .arrow-track { 
@@ -313,17 +486,19 @@ body {
 }
 
 .card-divider { 
-    width: 1px; 
-    height: 56px; 
+    width: 100%; 
+    height: 1px; 
     background: rgba(0,0,0,0.08); 
-    margin: 0 8px; 
+    margin: 4px 0; 
 }
 
 .right-panel {  
-    flex-direction: column; 
-    align-items: flex-end; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 10px; 
-    min-width: 500px; 
+    min-width: unset;
+    width: 100%;
 }
 
 
@@ -331,8 +506,8 @@ body {
 
 .confirm-page {
     max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem 1rem;
 }
 
 .back-link {
@@ -519,14 +694,24 @@ body {
 
 /* ── Calendar (Search Results) ────────────────────────────────────── */
 .calendar-card {
-    background: var(--bs-body-bg, #fff);
+    background: #fff;
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .calendar-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.calendar-table th {
+    color: #6c757d;
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding-bottom: 0.75rem;
 }
 
 .calendar-table th,
@@ -543,11 +728,19 @@ body {
 }
 
 .calendar-day.available {
-    background: rgba(38, 82, 132, 0.1);
+    background: rgba(38, 82, 132, 0.08);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.calendar-day.available:hover {
+    background: rgba(38, 82, 132, 0.18);
 }
 
 .calendar-day.selected {
+    background: rgba(38, 82, 132, 0.15);
     border: 2px solid #265284;
+    font-weight: 600;
 }
 
 .calendar-link {

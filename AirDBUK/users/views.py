@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, LoginForm
 from AirDBUK_App.models import Booking, Passenger, Booking_Passenger, Flight
 from AirDBUK_App.forms import AddPassengerDetails
 from django.contrib.auth.models import User
@@ -13,18 +13,18 @@ from django.forms import formset_factory
 # Create your views here.
 
 def login_user(request):
-    if request.method =="POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+    if request.method == "POST":
+        form = LoginForm(request=request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
             return redirect('dashboard')
         else:
             messages.success(request, ("There Was An Error Logging In, Try Again..."))
-            return redirect('login')
     else:
-        return render(request, 'authenticate/login.html', {})
+        form = LoginForm(request=request)
+    
+    return render(request, 'authenticate/login.html', {'form': form})
 
 def logout_user(request):
     logout(request)
