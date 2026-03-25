@@ -31,7 +31,7 @@
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="#">AirDBUK</a>
+            <a class="navbar-brand me-auto" href="/">AirDBUK</a>
             
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
@@ -42,7 +42,7 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link mx-lg-2" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="#">Destination</a>
@@ -53,59 +53,17 @@
                     </ul>
                 </div>
             </div>
-            <a href="#" class="login-button">Login</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="login-button">Dashbaord</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="login-button">Login</a>
+            {% endif %}
             <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
     </nav>
-
-    <!-- Mobile Offcanvas Drawer -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel"
-        style="width: 280px; border-right: 1px solid #eee;">
-        <div class="offcanvas-header border-bottom px-4 py-3">
-            <a href="/">
-                <img src="{% static 'images/AirDBUK_Logo.png' %}" alt="AirDBUK Logo"
-                    style="max-height: 45px; width: auto;">
-            </a>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body d-flex flex-column px-0 py-0">
-
-            <!-- Primary nav links -->
-            <ul class="list-unstyled mb-0">
-                <li>
-                    <a href="/" class="d-block px-4 py-3 text-decoration-none fw-semibold text-dark border-bottom"
-                        style="font-size: 1.05rem;">
-                        Book
-                    </a>
-                </li>
-                <li>
-                    <a href="/" class="d-block px-4 py-3 text-decoration-none fw-semibold text-dark border-bottom"
-                        style="font-size: 1.05rem;">
-                        Destinations
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="d-block px-4 py-3 text-decoration-none fw-semibold text-dark border-bottom"
-                        style="font-size: 1.05rem;">
-                        Info
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Spacer pushes CTA to bottom -->
-            <div class="mt-auto px-4 py-4 border-top">
-                {% if user.is_authenticated %}
-                <a class="btn btn-primary w-100" href="{% url 'dashboard' %}">Dashboard</a>
-                {% else %}
-                <a class="btn btn-primary w-100" href="{% url 'login' %}">Login</a>
-                {% endif %}
-            </div>
-
-        </div>
-    </div>
 
     <!-- Main Content -->
 

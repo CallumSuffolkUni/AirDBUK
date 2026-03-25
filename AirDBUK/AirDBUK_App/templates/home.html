@@ -3,12 +3,13 @@
 {% block title %}AirDBUK{% endblock %}
 
 {% block content %}
+<!-- Search Container -->
 <div class="hero-banner">
     <div class="hero-overlay">
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">Welcome to AirDBUK</h1>
-                <p class="hero-subtitle">Find and book your perfect flight</p>
+                <p class="hero-subtitle">Travel the UK! Find and book your perfect flight</p>
 
                 <div class="search-container">
                     <form method="get" action="{% url 'search_results' %}">
@@ -43,23 +44,25 @@
         </div>
     </div>
 </div>
+<!-- End of Search Container -->
 
-<div class="container home-destinations-grid">
+<!-- Extra Grid -->
+<div class="container mb-3">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
             <div class="card h-100">
                 <a href="{% url 'dashboard.html'}"><img src="static/images/Airport_1.webp" class="card-img-top" alt="Airport_1"></a>
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <h5 class="card-title">Heathrow to Manchester!</h5>
+                    <p class="card-text">Go check out the wonderful music, nightlife and festivals in Manchester! With iconic venues like the AO Arena or the 02 Apollo, you are certain to have a great time!</p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    <small class="text-body-secondary">LHR to MAN</small>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100">
+            <div class="card home h-100">
                 <img src="static/images/Airport_2.webp" class="card-img-top" alt="Airport_2">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -84,6 +87,8 @@
         </div>
     </div>
 </div>
+<!-- End of Extra Grid -->
+
 
 <!-- datalists for the JS-powered typeahead -->
 <datalist id="departure-list"></datalist>

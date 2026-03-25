@@ -90,10 +90,18 @@ body {
     margin: 0;
 }
 
+.card .home {
+    transition: 0.5s;
+}
+.card .home {
+    transform: scale(1.005); 
+    transition: 0.3s;
+}
+
 .navbar {
     background-color: #fff;
     height: 80px;
-    margin: 0 20px 20px 20px;
+    margin: 0px 20px 20px 20px;
     border-radius: 16px;
     padding: 0.5rem;
 }
@@ -105,10 +113,6 @@ body {
     z-index: 1030;
     margin: 0;
     border-radius: 0 0 16px 16px;
-}
-
-body {
-    padding-top: 80px; /* avoid content hiding under nav */
 }
 
 .navbar-brand {
@@ -166,7 +170,7 @@ body {
         transition: 0.3s ease-in-out;
     }
 
-    .nav-link:hover::before, .nav-link:active::before {
+    .nav-link:hover::before, .nav-link.active::before {
         width: 100%;
         visibility: visible;
     }
