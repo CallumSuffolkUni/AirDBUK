@@ -50,13 +50,17 @@
 
 <!-- Extra Grid -->
 <div class="container mb-3">
+    <div class="text-center mb-3">
+        <h2>--- Some of most popular flights! ---</h2>
+    </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
             <div class="card h-100">
-                <a href="#search-form" onclick="fillSearch('London, LHR, (Heathrow Airport)', 'Manchester, MAN, (Manchester Airport)', 'Economy', 1)"><img src="{% static 'images/Airport_1.webp' %}" class="card-img-top" alt="Airport_1" ></a>
+                <img src="{% static 'images/Airport_1.webp' %}" class="card-img-top" alt="Airport_1" >
                 <div class="card-body">
                     <h5 class="card-title">Heathrow to Manchester!</h5>
                     <p class="card-text">Go check out the wonderful music, nightlife and festivals in Manchester! With iconic venues like the AO Arena or the 02 Apollo, you are certain to have a great time!</p>
+                    <a class="login-button" href="#search-form" onclick="fillSearch('London, LHR, (Heathrow Airport)', 'Manchester, MAN, (Manchester Airport)', 'Economy', 1)">Search Flights</a>
                 </div>
                 <div class="card-footer">
                     <small class="text-body-secondary">LHR to MAN</small>
@@ -65,25 +69,27 @@
         </div>
         <div class="col">
             <div class="card home h-100">
-                <img src="{% static 'images/Airport_2.webp' %}" class="card-img-top" alt="Airport_2">
+                <img src="{% static 'images/Airport_2.webp' %}" class="card-img-top" alt="Airport_2" >
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    <h5 class="card-title">Edinburgh to Southend!</h5>
+                    <p class="card-text">Go explore the rich history, stunning architecture and vibrant culture of Edinburgh! With iconic landmarks like Arthur's Seat and the Royal Mile, then swap the highlands for the seaside charm of Southend-on-Sea — you are certain to have an unforgettable journey!</p>
+                    <a class="login-button" href="#search-form" onclick="fillSearch('Edinburgh, EDI, (Edinburgh Airport)', 'London, SEN, (London Southend Airport)', 'Economy', 1)">Search Flights</a>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    <small class="text-body-secondary">EDI to SEN</small>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100">
-                <img src="{% static 'images/Airport_3.webp' %}" class="card-img-top" alt="Airport_3">
+                <img src="{% static 'images/Airport_3.webp' %}" class="card-img-top" alt="Airport_3" >
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    <h5 class="card-title">Cardiff to Newcastle!</h5>
+                    <p class="card-text">Head over to the passionate rugby culture, live music scene and vibrant nightlife of Cardiff! With iconic venues like the Principality Stadium and Cardiff Castle, then swap the Welsh capital for the buzzing Geordie spirit and iconic quayside of Newcastle — you are certain to have an incredible trip!</p>
+                    <a class="login-button" href="#search-form" onclick="fillSearch('Edinburgh, EDI, (Edinburgh Airport)', 'London, SEN, (London Southend Airport)', 'Economy', 1)">Search Flights</a>
                 </div>
                 <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    <small class="text-body-secondary">CWL to NCL</small>
                 </div>
             </div>
         </div>

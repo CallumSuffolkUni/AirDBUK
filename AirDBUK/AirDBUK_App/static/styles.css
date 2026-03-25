@@ -119,18 +119,18 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #adb5bd;
+    color: #414141;
 }
 
 .progress-step.active {
-    color: #265284;
+    color: #414141;
 }
 
 .step-circle {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    border: 2px solid #adb5bd;
+    border: 2px solid #414141;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,9 +155,9 @@ body {
 .progress-line {
     flex: 0 0 50px;
     height: 1px;
-    background: #dee2e6;
+    background: #414141;
     margin: 0 10px;
-    border-top: 2px dashed #dee2e6;
+    border-top: 2px dashed #414141;
 }
 
 /* Navigation header */
@@ -429,10 +429,17 @@ button.account_button_secondary:hover {
     }
 }
 
-.search_results {
+.search_results{
     background-color: #f4f4f4;
+    background-image: url("images/AirDBUK_Background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     padding-bottom: 3rem;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .confirmation-card {
@@ -499,7 +506,7 @@ button.account_button_secondary:hover {
 /* Styling for Search Results */
 .flight-card { 
     background: var(--bs-body-bg, #fff); 
-    border: 1px solid rgba(0,0,0,0.1); 
+    border: none; 
     border-radius: 12px; 
     overflow: hidden; 
     margin-bottom: 1rem; 
@@ -814,7 +821,7 @@ button.account_button_secondary:hover {
 }
 
 .calendar-day.available {
-    background: rgba(38, 82, 132, 0.08);
+    border: 2px solid #265284;
     cursor: pointer;
     font-weight: 500;
 }
@@ -825,7 +832,6 @@ button.account_button_secondary:hover {
 
 .calendar-day.selected {
     background: rgba(38, 82, 132, 0.15);
-    border: 2px solid #265284;
     font-weight: 600;
 }
 
@@ -838,7 +844,6 @@ button.account_button_secondary:hover {
 }
 
 .calendar-link:hover {
-    background: rgba(38, 82, 132, 0.15);
     border-radius: 6px;
 }
 
@@ -860,7 +865,7 @@ button.account_button_secondary:hover {
 }
 
 .selected-dot {
-    background: #1d446d;
+    background: rgba(38, 82, 132, 0.15);
 }
 
 /* Cancelled booking styling */
