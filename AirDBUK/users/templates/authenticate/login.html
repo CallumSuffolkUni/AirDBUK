@@ -3,9 +3,10 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="login-page">
     <div class="container">
-        <div class="shadow p-4 mb-5 bg-body rounded w-50">
+        <div class="shadow p-4 mb-5 bg-body rounded w-100 w-sm-75 w-md-50" style="max-width: 560px;">
             <h1>Login</h1>
             
             <form method="POST" action="">

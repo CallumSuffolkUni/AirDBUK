@@ -42,6 +42,7 @@
             <input type="hidden" name="action" id="action-field" value="login">
             {% endif %}
 
+
             <div class="confirm-grid">
 
                 <!-- Left: Passenger Details -->
@@ -55,12 +56,20 @@
                     </div>
                     {% endfor %}
 
+
                     {% if not user.is_authenticated %}
                     <!-- Toggle buttons -->
                     <div class="mb-3">
                         <button type="button" class="account_button me-2" onclick="showSection('login')">Already have an account</button>
                         <button type="button" class="account_button_secondary" onclick="showSection('register')">Create an account</button>
                     </div>
+
+                    {% if form.errors or formset.errors or form_a.errors or form_b.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            There was an error with your form...
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
 
                     <!-- Login section -->
                     <div id="login-section" class="card confirm-card mb-3">
