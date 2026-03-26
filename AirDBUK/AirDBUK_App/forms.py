@@ -6,7 +6,7 @@ TRAVEL_CLASS_CHOICES = [
     ('', 'Select travel class'),
     ('Economy', 'Economy'),
     ('Business', 'Business'),
-    ('First', 'First'),
+    ('First Class', 'First Class'),
 ]
 
 class FlightSearchForm(forms.Form):
