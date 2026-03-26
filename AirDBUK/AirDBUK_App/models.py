@@ -70,14 +70,3 @@ class Booking_Passenger (models.Model):
     class Meta:
         verbose_name = "Booking_Passenger"
         verbose_name_plural = "Booking_Passengers"
-
-
-class Payment (models.Model):
-    id = models.AutoField(primary_key=True) #Auto assign primary_key
-    Amount = models.DecimalField(max_digits=7, decimal_places=2)
-    Payment_Date = models.DateTimeField()
-    Booking_ID = models.ForeignKey(Booking, on_delete=models.SET_NULL, null = True, blank = True, related_name = "payments") #Foreign Key linking to booking table
-
-    class Meta:
-        verbose_name = "Payment"
-        verbose_name_plural = "Payments"

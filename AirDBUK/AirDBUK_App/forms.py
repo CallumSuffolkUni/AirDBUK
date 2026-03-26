@@ -1,5 +1,5 @@
 from django import forms
-from .models import Airport, Flight, User, Booking, Passenger, Booking_Passenger, Payment
+from .models import Airport, Flight, User, Booking, Passenger, Booking_Passenger
 from datetime import date
 
 TRAVEL_CLASS_CHOICES = [
